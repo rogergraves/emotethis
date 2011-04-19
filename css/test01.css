@@ -1,0 +1,228 @@
+@charset "utf-8";
+
+/*start reset all CSS settings*/
+* {
+    text-decoration: none;
+    font-size: 1em;
+    outline: none;
+    padding: 0;
+    margin: 0;
+}
+code, kbd, samp, pre, tt, var, textarea,
+input, select, isindex, listing, xmp, plaintext {
+    white-space: normal;
+    font-size: 1em;
+    font: inherit;
+}
+dfn, i, cite, var, address, em {
+    font-style: normal;
+}
+th, b, strong, h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+}
+a, img, a img, iframe, form, fieldset,
+abbr, acronym, object, applet, table {
+    border: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+caption, th, td, center {
+    vertical-align: top;
+    text-align: left;
+}
+body {
+    background: white;
+    line-height: 1;
+    color: black;
+}
+q {
+    quotes: "" "";
+}
+ul, ol, dir, menu {
+    list-style: none;
+}
+sub, sup {
+    vertical-align: baseline;
+}
+a {
+    color: inherit;
+}
+hr {
+    display: none;
+}
+font {
+    color: inherit !important;
+    font: inherit !important;
+    color: inherit !important; /* editor's note: necessary? */
+}
+marquee {
+    overflow: inherit !important;
+}
+blink {
+    text-decoration: none;
+}
+nobr {
+    white-space: normal;
+}
+/*fin reset all CSS settings*/
+
+.bold-text{
+    font-weight: bold;
+}
+
+.emote-toolbar-blue{
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%,   color-stop(0.33, rgb(91,127,219) ), color-stop(0.7, rgb(35,83,194)));
+}
+
+.stimulus-bg{
+    background: #020308 url(../images/stimulus-page-bg.jpg) bottom left  no-repeat;
+    color: white;
+}
+
+.emote-button-blue{
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%,   color-stop(0.54, rgb(3,43,117) ), color-stop(0.72, rgb(106,127,183)));
+}
+
+.stimulus-desc{
+	text-align: center;
+	margin-top: 3%;
+}
+
+.stimulus-desc-title{
+	font-weight: bold;
+	font-size: 1.2em;
+	margin-bottom: 3%;
+}
+
+.stimulus-desc-text{
+	font-size: 0.8em;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+.stimulus-item{
+	text-align: center;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#face-area{
+    width: 302px;
+    height: 260px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom: 0;
+    margin-top: auto;
+    background: url('../images/first_faces.jpg');
+    background-position: 302px -2948px;
+    background-color: #6db6fb;
+    z-index: 5;
+
+} 
+
+#minus{
+    width: 45px;
+    height: 46px;
+    position: absolute;
+    top: 120px;
+}
+
+#plus{
+    width: 45px;
+    height: 46px;
+    position: absolute;
+    top: 120px;
+    right: 0px;
+}
+
+
+.face-shadow{
+    margin-left:auto;
+    margin-right:auto;
+    height: 34px;
+    width: 250px;
+    background: url('../images/shadow.png') no-repeat;
+    z-index: 5;
+    position: relative;
+}
+
+.face-area-bg{
+	position: absolute;
+	bottom: 0;
+    width: 100%;
+    background-color: #6db6fb; 
+}
+
+#emotion-stimulus{
+	padding-top: 10px;
+}
+
+#emotion-stimulus #face-name{
+	font-weight: bold;font-size: 1.7em;text-align: center;
+}
+
+.stimulus-short{
+	font-size: 0.7em;text-align: center; padding-bottom: 10px;
+}
+
+#intensity-area{
+    width: 302px;
+    height: 260px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom: 0;
+    margin-top: auto;
+    background-color: #6db6fb;
+    position: relative;
+    z-index: 5;
+    background-position: 302px -100px;
+} 
+
+#intensity-bg2{
+	width: 100%;
+	height: 1px;
+	position: absolute;
+	z-index: 1;
+	bottom: 0;
+	background: url('../images/intensity_gauge_background.png') repeat-x left bottom;
+}
+
+#intensity-stimulus{
+	padding-top: 10px;
+}
+
+#intensity-stimulus #iface-name{
+	font-weight: bold;font-size: 1.3em;text-align: center;
+}
+
+#verbatim-textarea{
+	width: 100%; 
+	margin-top: 40px;
+	height: 125px;
+}
+
+#verbatim-title{
+    float: left;
+    width: 200px;
+    font-size: 0.7em;
+}
+
+.welcome-text{
+	margin: 15px 10px 40px 10px;
+}
+
+#thanks-title{
+    margin-top: 45%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.4em;
+}
+
+#thanks-close{
+    margin-top: 45px;
+    text-align: center;
+    font-size: 0.7em;
+}
+

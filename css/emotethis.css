@@ -1,0 +1,138 @@
+@charset "utf-8";
+
+/*start reset all CSS settings*/
+* {
+    text-decoration: none;
+    font-size: 1em;
+    outline: none;
+    padding: 0;
+    margin: 0;
+}
+code, kbd, samp, pre, tt, var, textarea,
+input, select, isindex, listing, xmp, plaintext {
+    white-space: normal;
+    font-size: 1em;
+    font: inherit;
+}
+dfn, i, cite, var, address, em {
+    font-style: normal;
+}
+th, b, strong, h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+}
+a, img, a img, iframe, form, fieldset,
+abbr, acronym, object, applet, table {
+    border: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+caption, th, td, center {
+    vertical-align: top;
+    text-align: left;
+}
+body {
+    background: white;
+    line-height: 1;
+    color: black;
+}
+q {
+    quotes: "" "";
+}
+ul, ol, dir, menu {
+    list-style: none;
+}
+sub, sup {
+    vertical-align: baseline;
+}
+a {
+    color: inherit;
+}
+hr {
+    display: none;
+}
+font {
+    color: inherit !important;
+    font: inherit !important;
+    color: inherit !important; /* editor's note: necessary? */
+}
+marquee {
+    overflow: inherit !important;
+}
+blink {
+    text-decoration: none;
+}
+nobr {
+    white-space: normal;
+}
+/*fin reset all CSS settings*/
+
+#page1{text-align: center;}
+#page1 #itemimg{margin-top: 10px;}
+#page1 #description{font-size: 0.9em;margin-left: 20px;margin-right: 20px; text-align: left;}
+
+#main_face_desc_area{
+    height: 42px;
+}
+
+#face_name{
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+}
+
+#main_face_area{
+    width: 100%;
+    height: 335px;
+    text-align: center;
+    background-color: #6db6fb; 
+/*   background-color: red; */
+}
+
+#face_area{
+    width: 302px;
+    height: 300px;
+    margin-left:auto;
+    margin-right:auto;
+    background: url('../images/first_faces.jpg');
+    background-position: 302px -2925px;
+    background-color: #6db6fb;
+} 
+
+#face_shadow{
+    margin-left:auto;
+    margin-right:auto;
+    height: 34px;
+    width: 250px;
+    background: url('../images/shadow.png') no-repeat;
+}
+
+#intensity_desc_area{
+    height: 42px;
+}
+
+#intensity_main_area{
+    width: 100%;
+    height: 335px;
+    text-align: center;
+    background-color: #6db6fb; 
+}
+
+#intensity_area{
+    width: 302px;
+    height: 300px;
+    margin-left:auto;
+    margin-right:auto;
+    background: url('../images/amazed.png');
+    background-position: -302px 0px;
+    background-color: #6db6fb;
+} 
+
+#intencity_shadow{
+    margin-left:auto;
+    margin-right:auto;
+    height: 34px;
+    width: 250px;
+    background: url('../images/shadow.png') no-repeat;
+}
