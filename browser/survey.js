@@ -763,7 +763,7 @@ var SurveyData = function(options){
 
 		//create twitter url
 		//"My most recent experience with [SUBJECT] was [EMOTION] because [VERBATIM]";
-		var social_text = "My most recent experience with " + $("#short-stimulus").text() + " was " + faceName +
+		var social_text = "My most recent experience with " + $("#short-stimulus").text() + " was " + faceName.toUpperCase() +
 					" because " +
 					$("#verbatim-textarea").val().replace(/^\s*because\s*\.*\s+/i,'');
 		
@@ -777,6 +777,7 @@ var SurveyData = function(options){
 		$("#facebook_url").click(function(){
 			FB.ui({ method: 'feed',
 					picture: 'http://' + window.location.host + '/images/browser/small/' + fileName + '.png',
+					link : 'http://www.inspirationengine.com',
 					message: social_text
 			});
 		});
