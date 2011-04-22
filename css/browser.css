@@ -82,7 +82,7 @@ body{
 }
 
 .welcome-text, .welcome-start, .instruction-text, .stimulus-short, #short-desc, .thanks-text, .question-win,
-	 #demo-start-text, .thanks-message, .close-message{
+	 #demo-start-text, .thanks-message, .share-block{
 	font-size: 16px;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: white;
@@ -712,15 +712,17 @@ body{
 	text-align: center;
 	font-weight: bold;
 	padding-top: 170px;
-	
+	height: 325px;
+	width: 406px;
+	background: url('../images/browser/block.png') no-repeat left top;
 }
 
-.thanks-bg-win .close-message{
+.thanks-bg-win .share-block{
 	text-align: center;
 	position: absolute;
+	margin-left: 142px;
 	font-size: 10px;
-	width:406px;
-	bottom: 40px;
+	bottom: 47px;
 }
 
 #instruction-header{
@@ -744,4 +746,8 @@ body{
 #emote-face-name{
 	margin-top:2px; text-align: center; color: white; height: 40px;color: #FBDB2A;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+#short-stimulus{
+	display: none;
 }

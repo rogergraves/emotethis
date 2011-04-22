@@ -254,6 +254,10 @@ class SurveyResultManager{
 		return ' verbatim LIKE "%' . mysql_real_escape_string($w) . '%" ';
 	}
 	
+	public function isFree($survey_code){
+		
+	}
+	
 	
 	public function filterResults($survey_code, $a_words = NULL, $emote = NULL , $intensity_distr = NULL , $starting = 0, $ending = 0 ){
 		$db = new DB();

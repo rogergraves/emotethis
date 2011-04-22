@@ -37,7 +37,7 @@ var urlPath=window.location.pathname;
 			}
 		});
 		
-		var slides = elem.find("ul").children("li").each(function(index,el){return $(el)});
+		var slides = elem.find("ul").children("li").each(function(index,el){return $(el);});
 		
 		if( config.backTopButton)
 			backTopButton = $(config.backTopButton);
@@ -59,7 +59,7 @@ var urlPath=window.location.pathname;
 				});
 			else
 				obj._changeSlide(config.currentSlide, config.currentSlide + 1);
-		}
+		};
 		
 		$.each(config.nextElements,function(index,nextEl){
 			
@@ -103,7 +103,7 @@ var urlPath=window.location.pathname;
 				$(imageEl).attr('src', '../images/browser/white_dot.png');
 			});
 			$(dotsImages[indexDot]).attr('src', '../images/browser/yellow_dot.png');
-		}
+		};
 		
 		this.setDot(config.currentSlide);
 		
@@ -187,7 +187,7 @@ var urlPath=window.location.pathname;
 				}
 				
 			}
-		}
+		};
 		
 		//send event to the current slide
 		$(slides[config.currentSlide]).trigger("activateslide",[obj]);
@@ -266,15 +266,15 @@ var faceNames = {
 		
 		this.getFollow = function(){
 			return followerOn;
-		}
+		};
 		
 		this.getRow = function(){
 			return faceRow;
-		}
+		};
 		
 		this.getCol = function(){
 			return faceCol;
-		}
+		};
 		
 		this.setFollower = function(e){
 			var cursorX = e.pageX - 13;
@@ -308,15 +308,6 @@ var faceNames = {
 				}
 				
 				obj.setEmoteFace(col_num, row_num);
-				/*
-				if(e.pageX < pickerLeft + realface_w && pickerLeft < e.pageX
-					&& e.pageY < pickerTop + realface_h && e.pageY > pickerTop
-				){
-					var h_delta = pickerOffset.top - offset.top;
-					obj.setEmoteFace(Math.ceil((e.pageX - pickerLeft) / (realface_w/2)), 
-									Math.ceil((e.pageY - h_delta - pickerTop) / ((realface_h-20)/10)));
-				}
-				*/
 			}
 			
 			if(offTop < 13 ) offTop = 4;
@@ -328,14 +319,14 @@ var faceNames = {
 			if(followElem)
 				followElem.css({'left' : offLeft + 'px', 'top' : offTop + 'px'});
 			
-		}
+		};
 		
 		this.mouseFollow = function(e){
 			if(!followerOn) return;
 			obj.setFollower(e);
 			if(followElem && followElem.is(':hidden'))
 				followElem.show();
-		}
+		};
 		
 		this.faceFollow = function(e){
 			if(!followerOn) return;
@@ -349,7 +340,7 @@ var faceNames = {
 			var offTop = cursorY - offset.top;
 			
 			obj.setEmoteFace(Math.ceil(offLeft / (face_w/2)), Math.ceil(offTop / ((face_h-20)/10)));
-		}
+		};
 		
 		this.setEmoteFace = function(numCol,numRow,notName){
 			if(numRow < 1) numRow = 1;
@@ -374,18 +365,7 @@ var faceNames = {
 				faceCol = numCol;
 				faceRow = numRow;
 			}
-		}
-		/*
-		this.clickPicker = function(e){
-			if(!followerOn){
-				obj.setFollower(e);
-				followerOn = true;
-			}else{
-				followerOn = false;
-			}
-			if(config.faceClickHandler) config.faceClickHandler(followerOn);
-		}
-		*/
+		};
 		
 		this.clickPicker = function(e){
 			
@@ -417,7 +397,7 @@ var faceNames = {
 				}
 				if(config.faceClickHandler) config.faceClickHandler(followerOn);
 			}
-		}
+		};
 		
 		
 		/* init */
@@ -572,15 +552,15 @@ var faceIntensity = {
 		
 		this.getRow = function(){
 			return faceRow;
-		}
+		};
 		
 		this.getFollow = function(){
 			return followerOn;
-		}
+		};
 		
 		this.getFaceId = function(){
 			return faceId;
-		}
+		};
 		
 		this.setFaceId = function(newFaceId){
 			if(faceId != newFaceId){
@@ -589,7 +569,7 @@ var faceIntensity = {
 					faceNameElem.html(faceNames[newFaceId].toUpperCase());
 				faceId = newFaceId;
 			}
-		}
+		};
 		
 		this.setFollower = function(e){
 			var cursorX = e.pageX - 13;
@@ -620,7 +600,7 @@ var faceIntensity = {
 			
 			if(followElem)
 				followElem.css({'left' : offLeft + 'px', 'top' : offTop + 'px'});
-		}
+		};
 		
 		this.mouseFollow = function(e){
 			if(!followerOn) return;
@@ -629,17 +609,17 @@ var faceIntensity = {
 			
 			if(followElem && followElem.is(':hidden'))
 					followElem.show();
-		}
+		};
 		
 		this.getIntensityLevel = function(){
 			return intensity_level;
-		}
+		};
 		
 		this.setNewFace = function(imgSrc){
 			$('#intensity-bg2').css({'height' : '160px'});
 			$('#intensity-face').css({'background' : "url('" + imgSrc + "') -260px -25px"});
 			followerOn = true;
-		}
+		};
 		
 		this.setIntensityLevel = function(newLevel){
 			if(newLevel > 100) newLevel = 100;
@@ -658,7 +638,7 @@ var faceIntensity = {
 			
 			followerOn = false;
 			if(config.faceClickHandler) config.faceClickHandler(followerOn);
-		}
+		};
 		
 		this.setFace = function(numRow){
 			if(numRow < 1) numRow = 1;
@@ -685,7 +665,7 @@ var faceIntensity = {
 				if(faceNameElem)
 					faceNameElem.html(strFaceName.toUpperCase());
 			}
-		}
+		};
 		
 		this.clickPicker = function(e){
 			if(!followerOn){
@@ -695,7 +675,7 @@ var faceIntensity = {
 				followerOn = false;
 			}
 			if(config.faceClickHandler) config.faceClickHandler(followerOn);
-		}
+		};
 		
 		/* init */
 		if(config.faceElement) faceElem = $(config.faceElement);
@@ -735,7 +715,7 @@ var Loading = function(text,disable_nav){
 	this.disable_nav = disable_nav;
 	this.nextState = '';
 	this.nextState = '';
-}
+};
 
 Loading.prototype.start = function (){
 	/* disable nav buttons */
@@ -750,7 +730,7 @@ Loading.prototype.start = function (){
 	}
 	$("#ajax-preloader-text").text(this.loading_text);
 	$("#ajax-preloader").show();
-}
+};
 
 Loading.prototype.fin = function (){
 	/* enable nav buttons */
@@ -759,7 +739,7 @@ Loading.prototype.fin = function (){
 		this.nav.backTopButton(this.backState);
 	}
 	$("#ajax-preloader").hide('slow');
-}
+};
 
 /* Loading fin */
 
@@ -780,6 +760,26 @@ var SurveyData = function(options){
 		
 		var faceId = emotePicker.getCol() + '_' + emotePicker.getRow();
 		var faceName = faceNames[faceId];
+
+		//create twitter url
+		//"My most recent experience with [SUBJECT] was [EMOTION] because [VERBATIM]";
+		var social_text = "My most recent experience with " + $("#short-stimulus").text() + " was " + faceName +
+					" because " +
+					$("#verbatim-textarea").val().replace(/^\s*because\s*\.*\s+/i,'');
+		
+		$("#twitter_url").attr("href", "http://twitter.com/share?text=" + encodeURIComponent(social_text)+"&via=emote(TM)&url=http://www.inspirationengine.com");
+
+		//create facebook url
+		var intensityRow = intensityPicker.getRow() + 1;
+		
+		var fileName = faceName + "_intensity_" + intensityRow;
+		
+		$("#facebook_url").click(function(){
+			FB.ui({ method: 'feed',
+					picture: 'http://' + window.location.host + '/images/browser/small/' + fileName + '.png',
+					message: social_text
+			});
+		});
 
 		$.ajax({
 			type : 'POST',
@@ -813,7 +813,7 @@ var SurveyData = function(options){
 				}
 			}
 		});
-	}
+	};
 };
 
 var DemoResult = function(options){
@@ -852,7 +852,7 @@ var DemoResult = function(options){
 				}
 			}
 		});
-	}
+	};
 };
 
 
@@ -889,7 +889,7 @@ var UserData = function(options){
 				nav.nextSlide();
 			}
 		});
-	}
+	};
 };
 
 
@@ -909,15 +909,7 @@ function verbatimSlide(call_swithSlide){
 	}
 	
 	var strFaceName = faceName;
-	/*
-	var strFaceName = '';
-	if( intensityRow == 1)
-		strFaceName = 'A LITTLE ' + faceName;
-	else if(intensityRow == 2)
-		strFaceName = faceName;
-	else if(intensityRow == 3)
-		strFaceName = 'VERY ' + faceName;
-	 */
+
 	var textarea_el = $("#verbatim-textarea");
 	if( ! textarea_el.data('reset_field')){
 		$("#verbatim-face-name").html(strFaceName.toUpperCase());
@@ -1005,27 +997,6 @@ function createSurvey(){
 		//nav.backTopButton(false);
 		nav.backTopButtonVisible(false);
 	});
-/*	
-	$("#welcome-slide").bind("deactivateslide",function(event,nav){
-		nav.backTopButton(true);
-	});
-*/	
-/*
-	$("#stimulus-slide").bind("deactivateslide",function(event,nav){
-		nav.backTopButtonVisible(true);
-	}).bind("activateslide",function(event,nav){
-		var descText = $(this).children(".short-desc-value").first().html();
-		if(descText) $("#short-desc").html(descText);
-		nav.backTopButtonVisible(true);
-		if($("#welcome-slide").length){
-			nav.backTopButtonVisible(true);
-			//nav.backTopButton(true);
-		}else{
-			nav.backTopButtonVisible(false);
-			//nav.backTopButton(false);
-		}
-	});
-*/	
 
 	$("#emote-picker").emotepicker({
 		faceElement: "#emote-face"
@@ -1203,7 +1174,7 @@ function createSurvey(){
 			}else{
 				var ins_el = $('#instruction-header');
 				if(ins_el.css('visibility') == 'visible')
-					ins_el.animate({opacity: 0},600,'',function(){ ins_el.css({visibility: "hidden"}) });
+					ins_el.animate({opacity: 0},600,'',function(){ ins_el.css({visibility: "hidden"}); });
 			}
 		
 			if(oldSlideEl.id == "emote-slide" && newSlideEl.id == "intensity-slide"){
@@ -1217,13 +1188,7 @@ function createSurvey(){
 			}
 		}
 	});
-	/*
-	$("#next-button area").mouseenter(function() {
-		$("#next-button-on").attr('src', '../images/browser/right-arrow-over.png');
-	}).mouseleave(function(){
-		$("#next-button-on").attr('src', '../images/browser/right-arrow.png');
-	});
-	*/
+
 	$("#back-button area").mouseenter(function() {
 		$("#back-button-on").attr('src', '../images/browser/left-arrow-over.png');
 	}).mouseleave(function(){
@@ -1260,18 +1225,7 @@ function createSurvey(){
 
 		
 	}).bind("deactivateslide",function(event,nav){
-		/*
-		var emotePicker = $('#emote-picker').data('emotepicker');
-		if( ! emotePicker.getFollow()){
-			var faceId = emotePicker.getCol() + '_' + emotePicker.getRow();
-			var intensityPicker = $('#intensity-picker').data('intensitypicker');
-			intensityPicker.setFaceId(faceId);
-			$('#current-face-name').html(faceNames[faceId]);
-		}
-		*/
 		nav.nextTopButton(true);
-
-
 	});
 
 	
@@ -1344,12 +1298,12 @@ var SurveyRequest = function(options){
 				obj.showError();
 			}
 		});
-	}
+	};
 	
 	this.showError = function(){
 		$("#survey-loader-img").hide();
 		$("#survey-error-block").show();
-	}
+	};
 	
 	this.startSurvey = function(survey){
 		$("#next-button area").unbind("click");
@@ -1362,8 +1316,8 @@ var SurveyRequest = function(options){
 				createSurvey();
 			}
 		});
-	}
-}
+	};
+};
 
 
 
@@ -1391,6 +1345,7 @@ function createCodeRequest(){
 	});
 }
 
+
 $(document).ready(function(){
 	$("#main-content").show();
 	
@@ -1400,6 +1355,13 @@ $(document).ready(function(){
 		createSurvey();
 	}
 	
+	FB.init({ 
+		appId:'207296725962034', 
+		cookie:true,
+		status:true, 
+		xfbml:true 
+	});
+	
 	var numLoads = 0;
 	var loadingEl = $('#loading-percent');
 	$.preload(preloadImages,{
@@ -1408,7 +1370,6 @@ $(document).ready(function(){
 			$("#loading-mask").fadeOut("slow");
 		}
 		,onComplete : function(load){
-			//console.log("load image: "+ load.total + " - " + load.done);
 			var percentLoads = Math.ceil((90 * load.done)/load.total) + 10;
 			if(percentLoads > 100) percentLoads = 100;
 			loadingEl.html(percentLoads);
@@ -1416,6 +1377,3 @@ $(document).ready(function(){
 	});
 
 });
-
-//http://www.netzgesta.de/glossy/
-//http://jreject.turnwheel.com/

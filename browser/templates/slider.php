@@ -1,6 +1,9 @@
 <?php
 	$a_nav_dots = array();
 ?>
+
+
+	<div id="short-stimulus"><?= $tpl_vars['survey']->getShortStimulus() ?></div>
 	<div id="instruction-header" ><div id="instruction-header-text">Move mouse up and down near emoticon to select intensity. Click to set.</div></div>
 	<div id="slider-nav">
 		<div id="back-button">
@@ -293,11 +296,9 @@ You are about to <span class="bold-text">e.mote</span>&#0153;, a fast and fun wa
 					<?php array_push($a_nav_dots,'thanks'); ?>
 					<div class="short-desc-value"> &nbsp; </div>
 					<div class="thanks-bg-win">
-						<div class="thanks-message">
-							<?= $tpl_vars['survey']->getThanks() ?>
-						</div>
-						<div class="close-message">
-							You may now close this browser window.
+						<div class="share-block">
+							<a id="facebook_url" href="#"><img src="../images/browser/facebook_icon.png"></a>
+							<a id="twitter_url" href="#" target="_blank"><img src="../images/browser/twitter_icon.png"></a>
 						</div>
 					</div>
 				</li>
@@ -353,6 +354,8 @@ You are about to <span class="bold-text">e.mote</span>&#0153;, a fast and fun wa
 			'../images/browser/take_demos_yes_button.png',
 			'../images/browser/take_demos_no_button.png',
 			'../images/browser/thank_you_window.png',
-			'../images/browser/yellow_header.png'
+			'../images/browser/yellow_header.png',
+			'../images/browser/twitter_icon.png',
+			'../images/browser/facebook_icon.png'
 		];
 		</script>
