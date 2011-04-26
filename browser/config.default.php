@@ -13,7 +13,7 @@
 	define('DBUSER','root');
 	define('DBPASS','');
 	
-	
+//	 ssh -L 3310:127.0.0.1:3306 root@portal.rubyriders.com
 	define('USE_HOMIE_DB', true);
 	define('HOMIE_DBHOST','127.0.0.1:3310');
 	define('HOMIE_DBNAME','emotethis');
