@@ -13,4 +13,10 @@
 	define('DBUSER','root');
 	define('DBPASS','');
 	
+	
+	define('USE_HOMIE_DB', true);
+	define('HOMIE_DBHOST','127.0.0.1:3310');
+	define('HOMIE_DBNAME','emotethis');
+	define('HOMIE_DBUSER','root');
+	define('HOMIE_DBPASS','');
 ?>

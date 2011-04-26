@@ -291,9 +291,23 @@ class Verbatims extends ACall{
 			$a_words = array_keys($a_words);
 			$a_words = array_filter($a_words);
 
+			
 			$survey_result_mng = new SurveyResultManager();
+			
+			$starting = $this->getArgument('starting');
+			$ending = $this->getArgument('ending');
+			
+			if($survey_result_mng->isSurveyFree($survey_code)){
+				$starting = $starting ? $starting : 0;
+				$ending = $ending ? $ending : 0;
+				if(! $starting && ! $ending)
+					$ending = 50;
+				else if($ending > $starting + 50)
+					$ending = $starting + 50;
+			}
+			
 			$a_survey_results = $survey_result_mng->filterResults($survey_code,$a_words,$emote,$intensity_distr,
-								$this->getArgument('starting'),$this->getArgument('ending'));
+								$starting,$ending);
 
 			$a_results = array();
 			foreach($a_survey_results as $result){

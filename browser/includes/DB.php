@@ -3,6 +3,8 @@
 class DbException extends Exception { }
 
 
+
+
 class DB
 {
 	private static $db = null;
@@ -101,4 +103,42 @@ class FetchRow{
 	}
 }
 
+
+class HomieDB{
+	private static $db = null;
+	
+	function __construct() {
+		$this->connect();
+	}
+	
+	public function connect(){
+		
+		if(HomieDB::$db) return HomieDB::$db;
+		//print HOMIE_DBHOST.", ".HOMIE_DBUSER.", ".HOMIE_DBPASS;
+		HomieDB::$db = mysql_connect(HOMIE_DBHOST, HOMIE_DBUSER, HOMIE_DBPASS);
+		mysql_select_db(HOMIE_DBNAME);
+		if (!HomieDB::$db || !is_resource(HomieDB::$db)) {
+			throw new DbException("Db error " . mysql_errno(HomieDB::$db) . ": " . mysql_error(HomieDB::$db) );
+		}
+	}
+	
+	public function runQuery($sql, $return = true,$fetchObj = false){
+		$result = mysql_query($sql,DB::$db);
+
+		if( ! $result ){
+			throw new DbException("Db error for: " . $sql . " - " . mysql_errno(DB::$db) . ": " . mysql_error(DB::$db) );
+		}
+		//Return only if it is wanted
+		if ($return){
+			if($fetchObj) return new FetchRow($result);
+			$returnResult = array();
+			while($row = mysql_fetch_assoc($result)){
+				$returnResult[] = $row;
+			}
+			return $returnResult;
+		}else{
+			return $result;
+		}
+	}
+}
 ?>

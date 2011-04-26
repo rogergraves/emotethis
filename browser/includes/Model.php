@@ -56,6 +56,8 @@ class Survey{
 		return false;
 	}
 	
+
+	
 	function getThanks(){
 		$a_thanks = $this->xml->xpath('/survey/thanks');
 		if($a_thanks){
@@ -202,6 +204,23 @@ class Survey{
 
 class SurveyResultManager{
 	
+	function isSurveyFree($survey_code){
+		
+		$homie_db = defined("USE_HOMIE_DB") && USE_HOMIE_DB ? new HomieDB() : new DB();
+		$db = new DB();
+		$select_user_id = "SELECT user_id FROM surveys WHERE code = '" . mysql_real_escape_string($survey_code) . "' LIMIT 1";
+		$rows = $db->runQuery($select_user_id);
+		if(is_array($rows[0]) && $rows[0]['user_id']){
+			$user_id = $rows[0]['user_id'];
+			$select_stype = "SELECT kind FROM subscriptions where user_id='" .mysql_real_escape_string($user_id) . "' ORDER BY user_id DESC LIMIT 1";
+			$kind_rows = $homie_db->runQuery($select_stype);
+			if(is_array($kind_rows[0]) && $kind_rows[0]['kind'] == "free"){
+				return true;
+			}
+		}
+		
+		return false;
+	}
 	
 	public function isResult($survey_code,$result_id){
 		$db = new DB();
