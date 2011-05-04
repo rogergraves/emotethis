@@ -765,7 +765,7 @@ var SurveyData = function(options){
 		//"My most recent experience with [SUBJECT] was [EMOTION] because [VERBATIM]";
 		var social_text = "My most recent experience with " + $("#short-stimulus").text() + " was " + faceName.toUpperCase() +
 					" because " +
-					$("#verbatim-textarea").val().replace(/^\s*because\s*\.*\s+/i,'');
+					$("#verbatim-textarea").val().replace(/^\s*because\s*\.*\s*/i,'');
 		
 		$("#twitter_url").attr("href", "http://twitter.com/share?text=" + encodeURIComponent(social_text)+"&via=emote(TM)&url=http://www.inspirationengine.com");
 
