@@ -91,6 +91,12 @@ var App = Ext.apply(new Ext.util.Observable,{
 		els.each(function(el){
 			el.setHTML(data.short_stimulus);
 		});
+
+		var elsB = Ext.select('.short-stimulus-place-big');
+		elsB.each(function(el){
+			el.setHTML(data.short_stimulus.toUpperCase());
+		});
+
 		
 	}
 	
@@ -735,9 +741,9 @@ App.Ui.EmotePage = Ext.extend(Ext.Panel, {
 			'</div>' +
 			'<div class="red-instruction"><div class="red-instruction-place"><div id="face-name"><div style="font-size: 12px;">Move your finger around to change the <br/>emotion that best reflects your experiance.</div></div></div></div>' +
 			'<div class="face-area-bg">'+
-			'<div id="minus"><img src="../images/minus.png"></div><div id="negative">Negative<br/>Emotions</div>' +
+			'<div id="negative">Negative<br/>Emotions</div>' +
 			'<div id="face-area" ></div> ' + 
-			' <div id="plus"><img src="../images/plus.png"></div><div id="positive">Positive<br/>Emotions</div>'+
+			'<div id="positive">Positive<br/>Emotions</div>'+
 			'<div class="face-area-bg-col1"></div> <div class="face-area-bg-col2"></div>'+
 			'</div>',
 
@@ -1088,8 +1094,8 @@ App.Ui.VerbatimPage = Ext.extend(Ext.Panel, {
 			fullscreen: true,
 			cls: 'stimulus-bg',
 			activeItem: 0, // make sure the active item is set on the container config!
-			html: '<div id="verbatim-title">You said your experience with <span class="bold-text short-stimulus-place"></span> made you feel <span id="emotion-name-place"></span>. Why?</div>' + 
-			'<div id="verbatim-image-place"><img id="verbatim-image" src=""></div>' +
+			html: '<div id="verbatim-title">hjhjhj jhhhhj jhhhhhhhhhj jhhh jhhhhhhhh j jhhhhhhhhhj j  ggg g g g  g ggggggggggg gggggg gggggggggg ggggggggggg gggggggggg ggggggggggg gggggggggggg  jhjjjjj jhj jhjhj Why did you feel <span class="bold-text short-stimulus-place-big"></span> about <span id="emotion-name-place"></span>?</div>' + 
+			'<div id="verbatim-image-place"><img id="verbatim-image" src=""></div><div class="clear_both"></div>' +
 			'<textarea id="verbatim-textarea">Because...</textarea>',
 			dockedItems:[
 			             toolBar

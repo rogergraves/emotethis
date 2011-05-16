@@ -23,6 +23,7 @@
 		'../images/browser/next_button.png',
 		'../images/browser/bg.jpg',
 		'../images/browser/left_window_background.png',
+		'../images/browser/first_faces_transparent_bg.png',
 		'../images/browser/emotion_picker_window.png',
 		'../images/browser/submit_button.png',
 		'../images/browser/ajax-loader.gif'

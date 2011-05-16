@@ -288,11 +288,6 @@ nobr {
 	height: 125px;
 }
 
-#verbatim-title{
-    float: left;
-    width: 200px;
-    font-size: 0.7em;
-}
 
 .welcome-text{
 	margin: 15px 10px 40px 10px;
@@ -333,9 +328,19 @@ nobr {
 	margin-top: 30px;
 }
 
+#verbatim-title{
+    float: left;
+    font-size: 1.1em;
+    margin-left: 10px;
+    width: 200px;
+    margin-top: 20px;
+}
+
+
 #verbatim-image-place{
 	margin-top: 20px;
 	margin-right: 20px;
+	width: 76px;
 	float: right;
 }
 

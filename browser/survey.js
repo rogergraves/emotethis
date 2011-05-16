@@ -763,7 +763,7 @@ var SurveyData = function(options){
 
 		//create twitter url
 		//"My most recent experience with [SUBJECT] was [EMOTION] because [VERBATIM]";
-		var social_text = "<strong>Check out my latest e.mote&#0153; </strong> about \"" + $("#short-stimulus").text() + "\"...   I was " + 
+		var social_text = "Check out my latest e.mote™ about \"" + $("#short-stimulus").text() + "\"...   I was " + 
 				    faceName.toUpperCase() +
 					" \"" +
 					$("#verbatim-textarea").val().replace(/^\s*because\s*\.*\s*/i,'') + "\"";
