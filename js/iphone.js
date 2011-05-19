@@ -294,7 +294,7 @@ var App = Ext.apply(new Ext.util.Observable,{
 			App.ui.setActiveItem(self.ui.verbatimPage,animation);
 		});
 		var faceName = self.ui.emotePage.faceNames[emoteId];
-		Ext.get('emotion-name-place').setHTML(faceName);
+		Ext.get('emotion-name-place').setHTML(faceName.toUpperCase());
 
 		//Ext.get('verbatim-image').set({ "src" : '../images/verbatim_intensity/' + faceName});
 		//App.ui.setActiveItem(this.ui.verbatimPage,animation);
@@ -1116,7 +1116,7 @@ App.Ui.VerbatimPage = Ext.extend(Ext.Panel, {
 			fullscreen: true,
 			cls: 'stimulus-bg',
 			activeItem: 0, // make sure the active item is set on the container config!
-			html: '<div id="verbatim-title">Why did you feel <span class="bold-text short-stimulus-place-big"></span> about <span id="emotion-name-place"></span>?</div>' + 
+			html: '<div id="verbatim-title">Why did you feel <span id="emotion-name-place"></span>  about <span class="bold-text short-stimulus-place-big"></span>?</div>' + 
 			'<div id="verbatim-image-place"><img id="verbatim-image" src=""></div><div class="clear_both"></div>' +
 			'<textarea id="verbatim-textarea">Because...</textarea>',
 			dockedItems:[
