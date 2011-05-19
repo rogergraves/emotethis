@@ -99,9 +99,9 @@
 					top:0;\
 					left:0;\
 					background-color:black;\
-					-ms-filter: alpha(opacity=75);\
-					filter: alpha(opacity=75);\
-					opacity: .75;\
+					-ms-filter: alpha(opacity=95);\
+					filter: alpha(opacity=95);\
+					opacity: .95;\
 					width: 100%;\
 					height: 100%;\
 				}\

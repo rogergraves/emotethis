@@ -49,7 +49,9 @@ var App = Ext.apply(new Ext.util.Observable,{
 	    '../images/faces/faces_2_7.jpg', 
 	    '../images/faces/faces_2_8.jpg',
 	    '../images/faces/faces_2_9.jpg', 
-	    '../images/faces/faces_2_10.jpg'
+	    '../images/faces/faces_2_10.jpg',
+	    '../images/facebook_icon.png',
+	    '../images/twitter_icon.png'
 	],
 	
 	/**
@@ -70,10 +72,13 @@ var App = Ext.apply(new Ext.util.Observable,{
 	
 	bootstrap: function() {
 		var self = App;
-//		Ext.get("loading").hide();
-//		Ext.get("loading-mask").hide();
-//		self.initUi();
-//		self.initEventListener();
+
+		FB.init({ 
+		    appId:'207296725962034', 
+		    cookie:true,
+		    status:true, 
+		    xfbml:true 
+		});
 
 		self.preload(self.preloadImages,function(){
 			self.initUi();
@@ -317,14 +322,32 @@ var App = Ext.apply(new Ext.util.Observable,{
 		var faceName = self.ui.emotePage.faceNames[emoteId];
 		var intensity_level = self.ui.intensityPage.intensity_level;
 		var verbatim_el = Ext.get('verbatim-textarea');
-		//alert("faceName: " + faceName + ", Intensity level: " + intensity_level + ", verbatim: " + verbatim_el.dom.value);
-		/*
-				action: 'savesurveyresult',
-				emote : faceName,
-				intensity_level: intensityPicker.getIntensityLevel() ,
-				verbatim: $("#verbatim-textarea").val(),
-				out: 'json'
-*/
+
+		/*Thanks page*/
+		var verbatim_text = verbatim_el.dom.value;
+		
+		var social_text = "Check out my latest e.mote™ about \"" + self.surveyData.short_stimulus + "\"...   I was " + 
+				faceName.toUpperCase() +
+				" \"" +
+				verbatim_text.replace(/^\s*because\s*\.*\s*/i,'') + "\"";
+		
+		Ext.get('twitter_url').set({"href" : "http://twitter.com/share?text=" + encodeURIComponent(social_text)+"&via=emote(TM)&url=http://www.inspirationengine.com"});
+		
+		var faceRow = self.ui.intensityPage.faceRow + 1;
+		var fileName = faceName + "_intensity_" + faceRow;
+		
+		self.mon(Ext.get('facebook_url'), {
+		    tap: function(){
+		    	FB.ui({ method: 'feed',
+				picture: 'http://' + window.location.host + '/images/browser/small/' + fileName + '.png',
+				link : 'http://www.inspirationengine.com',
+				message: social_text
+			});
+		    },
+		    scope: App
+		});
+
+
 
 		Ext.Ajax.request({
 			url: App.urlPath,
@@ -341,7 +364,6 @@ var App = Ext.apply(new Ext.util.Observable,{
 			} 
 		});
 
-		//App.ui.setActiveItem(this.ui.thanksPage,animation);
 	}
 
 });
@@ -1094,7 +1116,7 @@ App.Ui.VerbatimPage = Ext.extend(Ext.Panel, {
 			fullscreen: true,
 			cls: 'stimulus-bg',
 			activeItem: 0, // make sure the active item is set on the container config!
-			html: '<div id="verbatim-title">hjhjhj jhhhhj jhhhhhhhhhj jhhh jhhhhhhhh j jhhhhhhhhhj j  ggg g g g  g ggggggggggg gggggg gggggggggg ggggggggggg gggggggggg ggggggggggg gggggggggggg  jhjjjjj jhj jhjhj Why did you feel <span class="bold-text short-stimulus-place-big"></span> about <span id="emotion-name-place"></span>?</div>' + 
+			html: '<div id="verbatim-title">Why did you feel <span class="bold-text short-stimulus-place-big"></span> about <span id="emotion-name-place"></span>?</div>' + 
 			'<div id="verbatim-image-place"><img id="verbatim-image" src=""></div><div class="clear_both"></div>' +
 			'<textarea id="verbatim-textarea">Because...</textarea>',
 			dockedItems:[
@@ -1153,8 +1175,13 @@ App.Ui.ThanksPage = Ext.extend(Ext.Panel, {
 			fullscreen: true,
 			cls: 'stimulus-bg',
 			activeItem: 0, // make sure the active item is set on the container config!
-			html: '<div id="thanks-title">Thank you for e.moting!</div>' + 
-			'<div id="thanks-close">You may now close this browser window.</div>',
+			html: '<div id="thanks-block"><div id="thanks-title">Thank you for e.moting!</div>' + 
+			'<div class="share-block">' +
+			'<a id="facebook_url" href="#"><img src="../images/facebook_icon.png"></a>' + 
+			'<a id="twitter_url" href="#" target="_blank"><img src="../images/twitter_icon.png"></a>' +
+			'</div>' +
+			'<div id="thanks-close">You may now close this browser window.</div>' + 
+			'</div>',
 			dockedItems:[
 			             toolBar
 			]
@@ -1162,8 +1189,6 @@ App.Ui.ThanksPage = Ext.extend(Ext.Panel, {
 		Ext.apply(this, config);
 		App.Ui.ThanksPage.superclass.initComponent.call(this);
 	}
-
-
 });
 Ext.reg('App.Ui.ThanksPage', App.Ui.ThanksPage);
 
