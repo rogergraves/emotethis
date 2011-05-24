@@ -781,6 +781,29 @@ var SurveyData = function(options){
 		var faceId = emotePicker.getCol() + '_' + emotePicker.getRow();
 		var faceName = faceNames[faceId];
 
+		//create twitter url
+		//"My most recent experience with [SUBJECT] was [EMOTION] because [VERBATIM]";
+		var social_text = "I e.moted about " + $("#short-stimulus").text() + " ...   I felt " + 
+				    faceName.toUpperCase() +
+					" because " +
+					$("#verbatim-textarea").val().replace(/^\s*because\s*\.*\s*/i,'');
+		
+		$("#twitter_url").attr("href", "http://twitter.com/share?text=" + encodeURIComponent(social_text)+"&via=emote(TM)&url=http://www.inspirationengine.com");
+
+		//create facebook url
+		var intensityRow = intensityPicker.getRow() + 1;
+		
+		var fileName = faceName + "_intensity_" + intensityRow;
+		
+		$("#facebook_url").click(function(){
+			FB.ui({ method: 'feed',
+					picture: 'http://' + window.location.host + '/images/browser/small/' + fileName + '.png',
+					link : 'http://www.inspirationengine.com',
+					message: social_text
+			});
+		});
+
+
 		$.ajax({
 			type : 'POST',
 			url: urlPath,
@@ -1396,6 +1419,13 @@ $(document).ready(function(){
 //	$("#main-content").show();
 	
 //	createSurvey();
+	
+	FB.init({ 
+		appId:'207296725962034', 
+		cookie:true,
+		status:true, 
+		xfbml:true 
+	});
 	
 	var numLoads = 0;
 	var loadingEl = $('#loading-percent');

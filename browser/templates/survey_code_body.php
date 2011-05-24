@@ -37,7 +37,7 @@
 	</script>
 	<div id="fb-root"></div>
 	<script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>
-	<script type="text/javascript" src="survey.js"></script>
+	<script type="text/javascript" src="../js/survey.js"></script>
 
 <?php
 	include(TEMPLATE_DIR . 'footer.php');
