@@ -3,9 +3,9 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">	
 	<title><?php 
-//	    if(array_key_exists('survey',$tpl_vars)){
-//		print("How do you feel about " . $tpl_vars['survey']->getShortStimulus() . " ?");
-//	    }
+	    if(array_key_exists('survey',$tpl_vars)){
+		print("How do you feel about " . $tpl_vars['survey']->getShortStimulus() . " ?");
+	    }
 	?></title>
 	<!-- Preloader -->
 	<style type="text/css">
