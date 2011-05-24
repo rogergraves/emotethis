@@ -1262,6 +1262,8 @@ function createSurvey(){
 		user_data.save();
 		return false;
 	});
+	
+	$('title').text("How do you feel about " + $('#short-stimulus').text() + "?");
 }
 
 var SurveyRequest = function(options){
@@ -1315,6 +1317,7 @@ var SurveyRequest = function(options){
 		$.preload(preloadImages,{
 			onFinish : function(){
 				$("#survey-area").html(elSurvey);
+
 				createSurvey();
 			}
 		});

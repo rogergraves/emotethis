@@ -101,7 +101,7 @@ var App = Ext.apply(new Ext.util.Observable,{
 		elsB.each(function(el){
 			el.setHTML(data.short_stimulus.toUpperCase());
 		});
-
+		Ext.get(Ext.DomQuery.selectNode('title')).setHTML("How do you feel about " + data.short_stimulus + "?");
 		
 	}
 	
@@ -593,6 +593,7 @@ App.Ui.CodePage = Ext.extend(Ext.Panel, {
 							App.nextCode();
 						}
 						Ext.get('preloading-win').setDisplayMode(Element.DISPLAY).hide(true);
+
 					},
 					failure: function ( result, request) { 
 						Ext.get('code-input-error').show();
