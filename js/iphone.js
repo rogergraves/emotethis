@@ -168,6 +168,9 @@ var App = Ext.apply(new Ext.util.Observable,{
 	}
 	
 	, orientationUpdate: function(){
+		if(App.ui.getActiveItem() === App.ui.verbatimPage){
+			return;
+		}
 		if( Ext.orientation == 'landscape'){
 			Ext.get('landscape-overlay').setDisplayMode(Element.DISPLAY).show(true);
 		}else{
