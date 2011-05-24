@@ -1117,7 +1117,7 @@ App.Ui.VerbatimPage = Ext.extend(Ext.Panel, {
 			fullscreen: true,
 			cls: 'stimulus-bg',
 			activeItem: 0, // make sure the active item is set on the container config!
-			html: '<div id="verbatim-title">Why did you feel <span id="emotion-name-place"></span>  about <span class="bold-text short-stimulus-place-big"></span>?</div>' + 
+			html: '<div id="verbatim-title"><span class="bold-text">Why did you feel <span id="emotion-name-place"></span></span>  about <span class="short-stimulus-place-big"></span>?</div>' + 
 			'<div id="verbatim-image-place"><img id="verbatim-image" src=""></div><div class="clear_both"></div>' +
 			'<textarea id="verbatim-textarea">Because...</textarea>',
 			dockedItems:[
