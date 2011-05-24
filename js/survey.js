@@ -768,7 +768,7 @@ var SurveyData = function(options){
 					" because \"" +
 					$("#verbatim-textarea").val().replace(/^\s*because\s*\.*\s*/i,'') + "\"";
 		
-		$("#twitter_url").attr("href", "http://twitter.com/share?text=" + encodeURIComponent(social_text)+"&via=emote(TM)&url=http://www.inspirationengine.com");
+		$("#twitter_url").attr("href", "http://twitter.com/share?text=" + encodeURIComponent(social_text)+" via e.mote"+"&url=http://www.inspirationengine.com");
 
 		//create facebook url
 		var intensityRow = intensityPicker.getRow() + 1;

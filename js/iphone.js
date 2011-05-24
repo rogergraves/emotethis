@@ -331,7 +331,7 @@ var App = Ext.apply(new Ext.util.Observable,{
 				" because \"" +
 				verbatim_text.replace(/^\s*because\s*\.*\s*/i,'') + "\"";
 		
-		Ext.get('twitter_url').set({"href" : "http://twitter.com/share?text=" + encodeURIComponent(social_text)+"&via=emote(TM)&url=http://www.inspirationengine.com"});
+		Ext.get('twitter_url').set({"href" : "http://twitter.com/share?text=" + encodeURIComponent(social_text)+" via e.mote"+"&url=http://www.inspirationengine.com"});
 		
 		var faceRow = self.ui.intensityPage.faceRow + 1;
 		var fileName = faceName + "_intensity_" + faceRow;
