@@ -763,10 +763,10 @@ var SurveyData = function(options){
 
 		//create twitter url
 		//"My most recent experience with [SUBJECT] was [EMOTION] because [VERBATIM]";
-		var social_text = "Check out my latest e.mote™ about \"" + $("#short-stimulus").text() + "\"...   I was " + 
+		var social_text = "I e.moted about " + $("#short-stimulus").text() + " ...   I felt " + 
 				    faceName.toUpperCase() +
-					" \"" +
-					$("#verbatim-textarea").val().replace(/^\s*because\s*\.*\s*/i,'') + "\"";
+					" because " +
+					$("#verbatim-textarea").val().replace(/^\s*because\s*\.*\s*/i,'');
 		
 		$("#twitter_url").attr("href", "http://twitter.com/share?text=" + encodeURIComponent(social_text)+"&via=emote(TM)&url=http://www.inspirationengine.com");
 

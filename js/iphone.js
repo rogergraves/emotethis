@@ -326,10 +326,10 @@ var App = Ext.apply(new Ext.util.Observable,{
 		/*Thanks page*/
 		var verbatim_text = verbatim_el.dom.value;
 		
-		var social_text = "Check out my latest e.mote™ about \"" + self.surveyData.short_stimulus + "\"...   I was " + 
+		var social_text = "I e.moted about " + self.surveyData.short_stimulus + " ... I felt " + 
 				faceName.toUpperCase() +
-				" \"" +
-				verbatim_text.replace(/^\s*because\s*\.*\s*/i,'') + "\"";
+				" because " +
+				verbatim_text.replace(/^\s*because\s*\.*\s*/i,'');
 		
 		Ext.get('twitter_url').set({"href" : "http://twitter.com/share?text=" + encodeURIComponent(social_text)+"&via=emote(TM)&url=http://www.inspirationengine.com"});
 		
