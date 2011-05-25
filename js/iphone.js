@@ -118,10 +118,12 @@ var App = Ext.apply(new Ext.util.Observable,{
 					
 					if(data.status == 'error'){
 						App.surveyCodeError = true;
+						self.ui = new App.Ui();
 					}else{
 						App.setSurvey(data);
+						self.ui = new App.Ui();
+						App.setSurvey(data);
 					}
-					self.ui = new App.Ui();
 					
 					var els = Ext.select('.short-stimulus-place');
 					els.each(function(el){
