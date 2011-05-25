@@ -101,7 +101,7 @@ var App = Ext.apply(new Ext.util.Observable,{
 		elsB.each(function(el){
 			el.setHTML(data.short_stimulus.toUpperCase());
 		});
-		Ext.get(Ext.DomQuery.selectNode('title')).setHTML("How do you feel about " + data.short_stimulus + "?");
+		//Ext.get(Ext.DomQuery.selectNode('title')).setHTML("How do you feel about " + data.short_stimulus + "?");
 		
 	}
 	
