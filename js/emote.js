@@ -79,7 +79,7 @@
 				}\
 				#emote-iframe-place {\
 					width: 950px;\
-					height: 450px;\
+					height: 480px;\
 					color: white;\
 					top: 0;\
 					left: 50%;\
@@ -99,9 +99,9 @@
 					top:0;\
 					left:0;\
 					background-color:black;\
-					-ms-filter: alpha(opacity=95);\
-					filter: alpha(opacity=95);\
-					opacity: .95;\
+					-ms-filter: alpha(opacity=5);\
+					filter: alpha(opacity=5);\
+					opacity: .05;\
 					width: 100%;\
 					height: 100%;\
 				}\
