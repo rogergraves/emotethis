@@ -123,10 +123,10 @@ class HomieDB{
 	}
 	
 	public function runQuery($sql, $return = true,$fetchObj = false){
-		$result = mysql_query($sql,DB::$db);
+		$result = mysql_query($sql,HomieDB::$db);
 
 		if( ! $result ){
-			throw new DbException("Db error for: " . $sql . " - " . mysql_errno(DB::$db) . ": " . mysql_error(DB::$db) );
+			throw new DbException("Db error for: " . $sql . " - " . mysql_errno(HomieDB::$db) . ": " . mysql_error(HomieDB::$db) );
 		}
 		//Return only if it is wanted
 		if ($return){
