@@ -250,7 +250,7 @@ var faceNames = {
 		
 		var elemOffset = elem.offset();
 		var facePickerElemOffset;
-		
+		var istouchMove = false;
 		
 		var defaults = {
 				faceElement: null
@@ -309,7 +309,6 @@ var faceNames = {
 				
 				obj.setEmoteFace(col_num, row_num);
 			}
-			
 			if(offTop < 13 ) offTop = 4;
 			else if(offTop > picker_h - 30) offTop = picker_h - 30;
 			
@@ -417,6 +416,21 @@ var faceNames = {
 		
 		this.setEmoteFace(faceCol,faceRow,true);
 		elem.mousemove(obj.mouseFollow);
+		
+		elem.bind('touchmove',function(e){
+			e.preventDefault();
+    			var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+    			var elm = $(this).offset();
+    			var x = touch.pageX - elm.left;
+    			var y = touch.pageY - elm.top;
+    			obj.mouseFollow(touch);
+    			
+    			if(config.faceClickHandler && ! istouchMove){
+    				istouchMove = true;
+				config.faceClickHandler(false);
+			}
+		});
+		
 		
 		if(facePickerElem)
 			//elem.click(obj.clickFace);
@@ -1317,7 +1331,6 @@ var SurveyRequest = function(options){
 		$.preload(preloadImages,{
 			onFinish : function(){
 				$("#survey-area").html(elSurvey);
-
 				createSurvey();
 			}
 		});

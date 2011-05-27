@@ -329,33 +329,5 @@ You are about to <span class="bold-text">e.mote</span>&#0153;, a fast and fun wa
 
 <?php
 	include(TEMPLATE_DIR . 'loader.php');
+	include(TEMPLATE_DIR . 'preload_images.php');
 ?>
-		<script>
-		var preloadImages = [
-			'../images/browser/emote_logo.png',
-			'../images/browser/left-arrow.png',
-			'../images/browser/left-arrow-over.png',
-			'../images/browser/right-arrow.png',
-			'../images/browser/right-arrow-over.png',
-			'../images/browser/yellow_dot.png',
-			'../images/browser/white_dot.png',
-			'../images/browser/bg.jpg',
-			'../images/browser/left_window_background.png',
-			'../images/browser/emotion_picker_window.png',
-			'../images/browser/first_faces_transparent_bg.png',
-			'../images/browser/intensity_window_max.png',
-			'../images/browser/mouse_follow_image.png',
-			'../images/browser/emoticon_shadow.png',
-			'../images/browser/verbatim_window_background.png',
-			'../images/browser/verbatim_submit_button.png',
-			'../images/browser/thank_you_smiley.png',
-			'../images/browser/data-submit-button.png',
-			'../images/browser/demographics_page_window_background.png',
-			'../images/browser/take_demos_yes_button.png',
-			'../images/browser/take_demos_no_button.png',
-			'../images/browser/thank_you_window.png',
-			'../images/browser/yellow_header.png',
-			'../images/browser/twitter_icon.png',
-			'../images/browser/facebook_icon.png'
-		];
-		</script>

@@ -51,7 +51,9 @@ var App = Ext.apply(new Ext.util.Observable,{
 	    '../images/faces/faces_2_9.jpg', 
 	    '../images/faces/faces_2_10.jpg',
 	    '../images/facebook_icon.png',
-	    '../images/twitter_icon.png'
+	    '../images/twitter_icon.png',
+	    '../images/emotion_instructions.jpg',
+	    '../images/intensity_instructions.png'
 	],
 	
 	/**
@@ -711,6 +713,7 @@ App.Ui.EmotePage = Ext.extend(Ext.Panel, {
 	maxWidth: 302,
 	maxHeight: 325,
 	faceHeight: 260,
+	showInstruction: true,
 	
 	faceNames: {
 		'1_1': 'outraged',
@@ -767,10 +770,12 @@ App.Ui.EmotePage = Ext.extend(Ext.Panel, {
 
 			html: '<div id="emotion-stimulus"><div class="stimulus-short">Tell us how you feel about <span class="bold-text short-stimulus-place"></span>.</div>'+
 			'</div>' +
-			'<div class="red-instruction"><div class="red-instruction-place"><div id="face-name"><div style="font-size: 12px;">Move your finger around to change the <br/>emotion that best reflects your experiance.</div></div></div></div>' +
+			'<div class="red-instruction"><div class="red-instruction-place"><div id="face-name"><div style="font-size: 12px;">Move your finger around to change the <br/>emotion that best reflects your experience.</div></div></div></div>' +
 			'<div class="face-area-bg">'+
 			'<div id="negative">Negative<br/>Emotions</div>' +
-			'<div id="face-area" ></div> ' + 
+		
+			'<div id="face-area" ><img id="emote-instruction" src="../images/emotion_instructions.jpg"></div> ' + 
+			
 			'<div id="positive">Positive<br/>Emotions</div>'+
 			'<div class="face-area-bg-col1"></div> <div class="face-area-bg-col2"></div>'+
 			'</div>',
@@ -808,6 +813,10 @@ App.Ui.EmotePage = Ext.extend(Ext.Panel, {
 	}
 	
 	, onSelectFace: function(e) {
+		if(this.showInstruction){
+		    Ext.get('emote-instruction').hide();
+		    this.showInstruction = false;
+		}
 		var button = this.dockedItems.items[0].items.items[1];
 		if(button.disabled){
 			button.enable();
@@ -971,7 +980,7 @@ App.Ui.IntensityPage = Ext.extend(Ext.Panel, {
 	faceRow: 1,
 	faceName: '',
 	intensity_level: 50,
-	
+	showInstruction: true,
 		
 	initComponent: function() {
 		var toolBar = new App.Ui.IntensityPageToolbar();
@@ -984,7 +993,7 @@ App.Ui.IntensityPage = Ext.extend(Ext.Panel, {
 				'<div class="red-instruction red-instruction2"><div class="red-instruction-place"><div id="face-name"><div style="font-size: 12px;">Move your finger up and down to set <br/>intensity.</div></div></div></div>' +
 //				'<div id="iface-name"><div style="color: red;font-size: 12px;">Move finger up and down near emoticon to set intensity.</div></div>' + 
 				'</div>' + 
-				'<div id="intensity-big-area" class="face-area-bg2"> <div id="intensity-area"></div> <div id="intensity-bg2"></div>  </div> ',
+				'<div id="intensity-big-area" class="face-area-bg2"> <div id="intensity-area"><img id="intensity-instruction" style="float: right;" src="../images/intensity_instructions.png"></div> <div id="intensity-bg2"></div>  </div> ',
 			dockedItems: [
 			              toolBar
 			]
@@ -1037,6 +1046,10 @@ App.Ui.IntensityPage = Ext.extend(Ext.Panel, {
 	}
 	
 	,onSelectIntensity: function(e){
+		if(this.showInstruction){
+		    Ext.get('intensity-instruction').hide();
+		    this.showInstruction = false;
+		}
 		var button = this.dockedItems.items[0].items.items[2];
 		if(button.disabled){
 			button.enable();
