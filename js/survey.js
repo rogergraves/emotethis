@@ -419,10 +419,13 @@ var faceNames = {
 		
 		elem.bind('touchmove',function(e){
 			e.preventDefault();
+			
     			var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+    			/*
     			var elm = $(this).offset();
     			var x = touch.pageX - elm.left;
     			var y = touch.pageY - elm.top;
+    			*/
     			obj.mouseFollow(touch);
     			
     			if(config.faceClickHandler && ! istouchMove){
@@ -552,6 +555,7 @@ var faceIntensity = {
 		
 		var faceId = null;
 		var faceNameElem = null;
+		var istouchMove = false;
 		
 		var defaults = {
 				backgroundElement: null
@@ -701,6 +705,24 @@ var faceIntensity = {
 		
 		this.setFace(faceRow);
 		elem.mousemove(obj.mouseFollow);
+		
+		elem.bind('touchmove',function(e){
+			e.preventDefault();
+    			var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+    			/*
+    			var elm = $(this).offset();
+    			var x = touch.pageX - elm.left;
+    			var y = touch.pageY - elm.top;
+    			*/
+    			obj.mouseFollow(touch);
+    			
+    			if(config.faceClickHandler && ! istouchMove){
+    				istouchMove = true;
+				config.faceClickHandler(false);
+			}
+		});
+
+		
 		elem.click(obj.clickPicker);
 	};
 	
