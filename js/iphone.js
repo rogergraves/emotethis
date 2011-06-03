@@ -352,7 +352,7 @@ var App = Ext.apply(new Ext.util.Observable,{
 		var faceRow = self.ui.intensityPage.faceRow + 1;
 		var fileName = faceName + "_intensity_" + faceRow;
 		
-		Ext.get('facebook_url').set({"href" : "http://www.facebook.com/dialog/feed?app_id=207296725962034&display=touch&message=".
+		Ext.get('facebook_url').set({"href" : "http://www.facebook.com/dialog/feed?app_id=207296725962034&display=touch&message="
 		+ encodeURIComponent(social_text) + "&picture=" + 'http://' + window.location.host + '/images/browser/small/' + fileName + '.png' +
 		"&link=http://www.inspirationengine.com&redirect_uri=http://www.inspirationengine.com"});
 
