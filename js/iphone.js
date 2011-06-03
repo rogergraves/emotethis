@@ -175,11 +175,20 @@ var App = Ext.apply(new Ext.util.Observable,{
 		if(App.ui.getActiveItem() === App.ui.verbatimPage){
 			return;
 		}
-		if( Ext.orientation == 'landscape'){
-			Ext.get('landscape-overlay').setDisplayMode(Element.DISPLAY).show(true);
-		}else{
-			Ext.get('landscape-overlay').setDisplayMode(Element.DISPLAY).hide(true);
-		} 
+		
+		if("onorientationchange" in window){
+		    if( Ext.orientation == 'landscape'){
+			var w = window.innerWidth;
+			var h = window.innerHeight;
+			//no need for big devices
+			if(h > 400 || h > w){
+				return;
+			}
+			Ext.get('landscape-overlay').setVisibilityMode(Element.DISPLAY).show(true);
+		    }else{
+			Ext.get('landscape-overlay').setVisibilityMode(Element.DISPLAY).hide(true);
+		    } 
+		}
 	}
 	
 	, nextCode: function(e, from){
@@ -260,10 +269,10 @@ var App = Ext.apply(new Ext.util.Observable,{
 		var emoteId = self.ui.emotePage.faceCol + '_' + self.ui.emotePage.faceRow;
 		var imgSrc = self.ui.intensityPage.faceIntensity[emoteId].img;
 		
-		Ext.get('preloading-win').setDisplayMode(Element.DISPLAY).show(true);
+		Ext.get('preloading-win').setVisibilityMode(Element.DISPLAY).show(true);
 		
 		self.preload(['../images/' + imgSrc],function(){
-			Ext.get('preloading-win').setDisplayMode(Element.DISPLAY).hide(true);
+			Ext.get('preloading-win').setVisibilityMode(Element.DISPLAY).hide(true);
 			self.ui.intensityPage.setEmote(emoteId);
 			App.ui.setActiveItem(self.ui.intensityPage,animation);
 			
@@ -293,10 +302,10 @@ var App = Ext.apply(new Ext.util.Observable,{
 			     intensityId + ".png";
 
 		var imagePath = '../images/verbatim_intensity/' + faceName;
-		Ext.get('preloading-win').setDisplayMode(Element.DISPLAY).show(true);
+		Ext.get('preloading-win').setVisibilityMode(Element.DISPLAY).show(true);
 		
 		self.preload([imagePath],function(){
-			Ext.get('preloading-win').setDisplayMode(Element.DISPLAY).hide(true);
+			Ext.get('preloading-win').setVisibilityMode(Element.DISPLAY).hide(true);
 			Ext.get('verbatim-image').set({ "src" : imagePath});
 			App.ui.setActiveItem(self.ui.verbatimPage,animation);
 		});
@@ -323,7 +332,7 @@ var App = Ext.apply(new Ext.util.Observable,{
 				direction: 'left'
 		};
 		
-		Ext.get('preloading-win').setDisplayMode(Element.DISPLAY).show(true);
+		Ext.get('preloading-win').setVisibilityMode(Element.DISPLAY).show(true);
 		
 		var emoteId = self.ui.emotePage.faceCol + '_' + self.ui.emotePage.faceRow;
 		var faceName = self.ui.emotePage.faceNames[emoteId];
@@ -343,6 +352,11 @@ var App = Ext.apply(new Ext.util.Observable,{
 		var faceRow = self.ui.intensityPage.faceRow + 1;
 		var fileName = faceName + "_intensity_" + faceRow;
 		
+		Ext.get('facebook_url').set({"href" : "http://www.facebook.com/dialog/feed?app_id=207296725962034&display=touch&message=".
+		+ encodeURIComponent(social_text) + "&picture=" + 'http://' + window.location.host + '/images/browser/small/' + fileName + '.png' +
+		"&link=http://www.inspirationengine.com&redirect_uri=http://www.inspirationengine.com"});
+
+		/*
 		self.mon(Ext.get('facebook_url'), {
 		    tap: function(){
 		    	FB.ui({ method: 'feed',
@@ -353,7 +367,7 @@ var App = Ext.apply(new Ext.util.Observable,{
 		    },
 		    scope: App
 		});
-
+		*/
 
 
 		Ext.Ajax.request({
@@ -363,11 +377,11 @@ var App = Ext.apply(new Ext.util.Observable,{
 				verbatim: verbatim_el.dom.value, device: 'phone', out: 'json' },
 			success: function(result){
 				App.ui.setActiveItem(self.ui.thanksPage,animation);
-				Ext.get('preloading-win').setDisplayMode(Element.DISPLAY).hide(true);
+				Ext.get('preloading-win').setVisibilityMode(Element.DISPLAY).hide(true);
 			},
 			failure: function ( result, request) { 
 				App.ui.setActiveItem(self.ui.thanksPage,animation);
-				Ext.get('preloading-win').setDisplayMode(Element.DISPLAY).hide(true);
+				Ext.get('preloading-win').setVisibilityMode(Element.DISPLAY).hide(true);
 			} 
 		});
 
@@ -582,7 +596,8 @@ App.Ui.CodePage = Ext.extend(Ext.Panel, {
 		
 		this.mon(Ext.get('code-submit'), {
 			tap: function(){
-				Ext.get('preloading-win').setDisplayMode(Element.DISPLAY).show(true);
+//				Ext.get('preloading-win').setDisplayMode(Element.DISPLAY).show(true);
+				Ext.get('preloading-win').setVisibilityMode(Element.DISPLAY).show(true);
 				var survey_code = Ext.get('input-survey-code').getValue();
 				Ext.Ajax.request({
 					url: App.urlPath,
@@ -592,19 +607,19 @@ App.Ui.CodePage = Ext.extend(Ext.Panel, {
 						var data = Ext.util.JSON.decode(result.responseText);
 						if(data.status == 'error'){
 							var el = Ext.get('code-input-error');
-							el.setDisplayMode(Element.DISPLAY);
+							el.setVisibilityMode(Element.DISPLAY);
 							el.show(true);
 							
 						}else{
 							App.setSurvey(data);
 							App.nextCode();
 						}
-						Ext.get('preloading-win').setDisplayMode(Element.DISPLAY).hide(true);
+						Ext.get('preloading-win').setVisibilityMode(Element.DISPLAY).hide(true);
 
 					},
 					failure: function ( result, request) { 
 						Ext.get('code-input-error').show();
-						Ext.get('preloading-win').setDisplayMode(Element.DISPLAY).hide(true);
+						Ext.get('preloading-win').setVisibilityMode(Element.DISPLAY).hide(true);
 					} 
 				});
 			}
