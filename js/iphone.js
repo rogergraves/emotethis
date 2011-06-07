@@ -351,10 +351,18 @@ var App = Ext.apply(new Ext.util.Observable,{
 		
 		var faceRow = self.ui.intensityPage.faceRow + 1;
 		var fileName = faceName + "_intensity_" + faceRow;
-		
+		/*
 		Ext.get('facebook_url').set({"href" : "http://www.facebook.com/dialog/feed?app_id=207296725962034&display=touch&message="
 		+ encodeURIComponent(social_text) + "&picture=" + 'http://' + window.location.host + '/images/browser/small/' + fileName + '.png' +
 		"&link=http://www.inspirationengine.com&redirect_uri=http://" + window.location.host});
+		*/
+
+		Ext.get('facebook_url').set({"href" : "http://www.facebook.com/dialog/feed?app_id=207296725962034&display=touch&message="
+		    + encodeURIComponent(social_text) + "&picture=" + 'http://' + window.location.host + '/images/browser/small/' + fileName + '.png' +
+		    "&link=http://www.inspirationengine.com&next=" +
+		    encodeURIComponent('http://static.ak.fbcdn.net/connect/xd_proxy.php?version=3#cb=f16660ce3fa2a72') + "&sdk=joey",
+		    "target" : "_blank"});
+
 
 		/*
 		self.mon(Ext.get('facebook_url'), {
@@ -706,9 +714,10 @@ App.Ui.EmotePageToolbar = Ext.extend(Ext.Toolbar, {
 						text: '&nbsp;next&nbsp;',
 						handler: App.nextEmote,
 						disabled: true,
-						style: {
-							backgroundImage: "-webkit-gradient(linear, 0% 0%, 0% 100%,   color-stop(0.7, rgb(3,43,117) ), color-stop(0.33, rgb(106,127,183)))"
-						},
+						cls: 'emote-toolbar-button',
+//						style: {
+//							backgroundImage: "-webkit-gradient(linear, 0% 0%, 0% 100%,   color-stop(0.7, rgb(117,3,3) ), color-stop(0.33, rgb(255,101,101)))"
+//						},
 						scope: App
 					})
 			]
@@ -886,9 +895,7 @@ App.Ui.IntensityPageToolbar = Ext.extend(Ext.Toolbar, {
 						text: '&nbsp;next&nbsp;',
 						handler: App.nextIntensity,
 						disabled: true,
-						style: {
-							backgroundImage: "-webkit-gradient(linear, 0% 0%, 0% 100%,   color-stop(0.7, rgb(3,43,117) ), color-stop(0.33, rgb(106,127,183)))"
-						},
+						cls: 'emote-toolbar-button',
 						scope: App
 					})
 			]
@@ -1127,9 +1134,7 @@ App.Ui.VerbatimToolbar = Ext.extend(Ext.Toolbar, {
 						text: '&nbsp;next&nbsp;',
 						handler: App.nextVerbatim,
 						disabled: true,
-						style: {
-							backgroundImage: "-webkit-gradient(linear, 0% 0%, 0% 100%,   color-stop(0.7, rgb(3,43,117) ), color-stop(0.33, rgb(106,127,183)))"
-						},
+						cls: 'emote-toolbar-button',
 						scope: App
 					})
 			]
