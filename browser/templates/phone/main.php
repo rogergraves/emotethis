@@ -88,9 +88,6 @@
 	
 	
 
-	<div id="fb-root"></div>
-	<script src="http://connect.facebook.net/en_US/all.js"></script>
-
 	<link rel="stylesheet" href="../css/phone.css" type="text/css">
 	<script type="text/javascript" src="../js/sencha-touch.js"></script>
 	<script type="text/javascript" src="../js/iphone.js"></script>

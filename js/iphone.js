@@ -74,14 +74,14 @@ var App = Ext.apply(new Ext.util.Observable,{
 	
 	bootstrap: function() {
 		var self = App;
-
+/*
 		FB.init({ 
 		    appId:'207296725962034', 
 		    cookie:true,
 		    status:true, 
 		    xfbml:true 
 		});
-
+*/
 		self.preload(self.preloadImages,function(){
 			self.initUi();
 			self.initEventListener();
