@@ -1054,16 +1054,19 @@ App.Ui.IntensityPage = Ext.extend(Ext.Panel, {
 	
 	,setEmote: function(emoteId){
 		var imgSrc = this.faceIntensity[emoteId].img;
-		this.intensityFaceEl.setStyle('background', "url('../images/" + imgSrc + "') 0px -35px" );
-		this.intensity_level = 50;
+		
+		this.intensity_level = 20;
+		var num_row = this.intensity_level > 33 ? (this.intensity_level > 67 ? 3 : 2 ) : 1;
+		var offset_x = (num_row - 1) * 302;
+		this.intensityFaceEl.setStyle('background', "url('../images/" + imgSrc + "') -" + offset_x + "px -35px" );
+		
 		this.faceName = App.ui.emotePage.faceNames[emoteId];
 
 		Ext.get('iface-name-title').update(this.faceName.toLowerCase());
 		
 		//Ext.get('iface-name').update(this.faceName.toLowerCase());
-		this.intensity_level = 50;
 		var maxBgHeight = this.start_y - this.intensityEl.getY();//this.maxBgHeight
-		var bg_height = Math.ceil(maxBgHeight / 2) - 15;
+		var bg_height = Math.ceil(maxBgHeight / 5) - 15;
 		this.intensityBgEl.setStyle('height', bg_height + 'px' );
 	}
 	

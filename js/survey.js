@@ -548,7 +548,8 @@ var faceIntensity = {
 		var followerOn = true;
 		var picker_h = elem.height();
 		var picker_w = elem.width();
-		var intensity_level = 50;
+		var intensity_level = 20;
+		var start_intensity_level = 20;
 		var bgElem = null;
 		var faceRow = 2;
 		var faceElem = null;
@@ -634,8 +635,20 @@ var faceIntensity = {
 		};
 		
 		this.setNewFace = function(imgSrc){
-			$('#intensity-bg2').css({'height' : '160px'});
-			$('#intensity-face').css({'background' : "url('" + imgSrc + "') -260px -25px"});
+			var bg_h = (picker_h * start_intensity_level) / 100;
+			
+			var numRow = start_intensity_level < 33 ? 0 : (start_intensity_level < 66 ? 1 : 2);
+			
+			var offset_x = numRow * 260;
+			
+			if(bgElem){
+				bgElem.css({'height' : bg_h + 'px'});
+			}
+			
+			if(faceElem){
+				alert(numRow + " : " + offset_x);
+				faceElem.css({'background' : "url('" + imgSrc + "') -" + offset_x + "px -25px"});
+			}
 			followerOn = true;
 		};
 		
