@@ -349,7 +349,7 @@ var App = Ext.apply(new Ext.util.Observable,{
 		
 		Ext.get('twitter_url').set({"href" : "http://twitter.com/share?text=" + encodeURIComponent(social_text)+" via e.mote"+"&url=http://www.inspirationengine.com"});
 		
-		var faceRow = self.ui.intensityPage.faceRow + 1;
+		var faceRow = self.ui.intensityPage.faceRow;
 		var fileName = faceName + "_intensity_" + faceRow;
 		/*
 		Ext.get('facebook_url').set({"href" : "http://www.facebook.com/dialog/feed?app_id=207296725962034&display=touch&message="
@@ -359,10 +359,9 @@ var App = Ext.apply(new Ext.util.Observable,{
 
 		Ext.get('facebook_url').set({"href" : "http://www.facebook.com/dialog/feed?app_id=207296725962034&display=touch&message="
 		    + encodeURIComponent(social_text) + "&picture=" + 'http://' + window.location.host + '/images/browser/small/' + fileName + '.png' +
-		    "&link=http://www.inspirationengine.com&next=" +
-		    encodeURIComponent('http://static.ak.fbcdn.net/connect/xd_proxy.php?version=3#cb=f16660ce3fa2a72') + "&sdk=joey",
+		    "&link=http://www.inspirationengine.com&redirect_uri=" +
+		    encodeURIComponent('http://' + window.location.host + "/close.html") + "&sdk=joey",
 		    "target" : "_blank"});
-
 
 		/*
 		self.mon(Ext.get('facebook_url'), {

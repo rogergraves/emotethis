@@ -646,7 +646,6 @@ var faceIntensity = {
 			}
 			
 			if(faceElem){
-				alert(numRow + " : " + offset_x);
 				faceElem.css({'background' : "url('" + imgSrc + "') -" + offset_x + "px -25px"});
 			}
 			followerOn = true;
