@@ -9,6 +9,7 @@ CallMapper::registerMapArray(array(
 	array('savesurveyresult',NULL,array(array('action'=>'savesurveyresult')),NULL,50),
 	array('savedemoresult',NULL,array(array('action'=>'savedemoresult')),NULL,50),
 	array('widgetsurvey',NULL,array(array('action'=>'widgetsurvey')),NULL,50),
+	array('setemail',NULL,array(array('action'=>'setemail')),NULL,50),
 	array('startsurvey',NULL,array('survey')),
 	array('startsurvey',NULL,array('uid')),
 	

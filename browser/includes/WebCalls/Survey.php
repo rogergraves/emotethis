@@ -322,5 +322,49 @@ class SaveDemoResult extends ACall{
 WebCallFactory::registryCall('savedemoresult','SaveDemoResult');
 
 
+class SetEmail extends ACall{
+	public function call(){
+		try{
+			if(!session_id()) {
+				session_start();
+			}
+			
+			$survey_code =& $_SESSION['survey_code'];
+			$result_id =& $_SESSION['result_id'];
+			$user_data_id =& $_SESSION['user_data_id'];
+			
+			if(!$result_id) return new Answer('error','Unknow result','json');
+			
+			$email = $this->getArgument('email');
+			$s_user_obj = NULL;
+			
+			if($user_data_id){
+				$survey_result_manager = new SurveyResultManager();
+				$s_user_obj = $survey_result_manager->getUserData($user_data_id);
+			}
+			
+			if( ! $s_user_obj){
+				$s_user_obj = new SurveyUserData($result_id);
+			}
+			
+			$s_user_obj->setEmail($email);
+			$s_user_obj->save();
+			
+			$_SESSION['user_data_id'] = $s_user_obj->getId();
+			
+			return new Answer('ok',"User data save",'json');
+		}catch(Exception $e){
+			return new Answer('error',$e->getMessage(),'json');
+		}
+	}
+
+	public function listArguments(){
+		return array('email');
+	}
+
+}
+WebCallFactory::registryCall('setemail','SetEmail');
+
+
 
 ?>

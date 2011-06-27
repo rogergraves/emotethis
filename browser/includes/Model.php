@@ -56,7 +56,13 @@ class Survey{
 		return false;
 	}
 	
-
+	function storeRespondentContacts(){
+		$store_respondent_contacts = (string)$this->getAttribute('/survey', 'store_respondent_contacts');
+		if($store_respondent_contacts && strtolower($store_respondent_contacts) == 'true'){
+			return true;
+		}
+		return false;
+	}
 	
 	function getThanks(){
 		$a_thanks = $this->xml->xpath('/survey/thanks');
@@ -410,6 +416,7 @@ class SurveyUserData{
 			$this->phone = $user_data['phone'];
 		}else{
 			//constructed by survey code
+			
 			$this->survey_result_id = $user_data;
 		}
 	}
@@ -462,10 +469,16 @@ class SurveyUserData{
 			$db->runQuery($sql,false);
 		}else{
 			$sql = "INSERT INTO survey_user_data(survey_result_id,name,email,phone) VALUES(" .
-						"'" . mysql_real_escape_string($this->survey_result_id) . "'," .
-						"'" . mysql_real_escape_string($this->name) . "'," .
-						"'" . mysql_real_escape_string($this->email) . "'," .
-						"'" . mysql_real_escape_string($this->phone) . "')";
+					"'" . mysql_escape_string($this->survey_result_id) . "'," .
+					"'" . mysql_escape_string($this->name) . "'," .
+					"'" . mysql_escape_string($this->email) . "'," .
+					"'" . mysql_escape_string($this->phone) . "')";
+
+//			$sql = "INSERT INTO survey_user_data(survey_result_id,name,email,phone) VALUES(" .
+//						"'" . mysql_real_escape_string($this->survey_result_id) . "'," .
+//						"'" . mysql_real_escape_string($this->name) . "'," .
+//						"'" . mysql_real_escape_string($this->email) . "'," .
+//						"'" . mysql_real_escape_string($this->phone) . "')";
 			
 			$db = new DB();
 			$db->runQuery($sql,false);

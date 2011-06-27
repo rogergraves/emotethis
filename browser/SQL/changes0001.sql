@@ -1,0 +1,1 @@
+ALTER TABLE survey_result ADD COLUMN email varchar(255);

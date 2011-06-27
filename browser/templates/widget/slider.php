@@ -296,6 +296,37 @@ You are about to <span class="bold-text">e.mote</span>&#0153;, a fast and fun wa
 					<?php array_push($a_nav_dots,'thanks'); ?>
 					<div class="short-desc-value"> &nbsp; </div>
 					<div class="thanks-bg-win">
+					<?php
+					$store_contacts = $tpl_vars['survey']->storeRespondentContacts();
+					if($store_contacts){
+					?>
+						<div id="contact-email-block">
+						    <div class="message">
+							Start a conversation with us... Enter your email below - we'd be delighted to contact you!
+						    </div>
+						    <div class="error-block non-visible">
+							<span class="typo">EMAIL TYPO DETECTED:</span><br/>
+							<span class="error-message">Please re-check the email address you entered.</span>
+						    </div>
+							<form id="send-email">
+							    <div class="input-email">
+								<input type="text" value="" id="input-email-data">
+							    </div>
+							    
+							    <div class="submit-button">
+								<input type="image" src="../images/browser/contact_me_button.png">
+							    </div>
+							    <div class="clear-both"></div>
+							</form>
+						</div>
+					<?php
+					}
+					?>
+					<div id="thanks-message" <?php if($store_contacts){ ?> style="display: none;" <?php } ?>  >
+						<img src="../images/browser/emote_logo_big.png">
+						<div class="message">Thank you for e.moting!</div>
+					</div>
+
 						<div class="share-block">
 							<a id="facebook_url" href="#"><img src="../images/browser/facebook_icon.png"></a>
 							<a id="twitter_url" href="#" target="_blank"><img src="../images/browser/twitter_icon.png"></a>
