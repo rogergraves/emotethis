@@ -824,11 +824,31 @@ var SurveyData = function(options){
 		var fileName = faceName + "_intensity_" + intensityRow;
 		
 		$("#facebook_url").click(function(){
+			/*
 			FB.ui({ method: 'feed',
 					picture: 'http://' + window.location.host + '/images/browser/small/' + fileName + '.png',
 					link : 'http://www.inspirationengine.com',
 					message: social_text
 			});
+			*/
+			FB.login(function(response) {
+				if (response.authResponse) {
+					var userId = response.authResponse.userID;
+					FB.api( '/' + userId +'/feed', 'post',{
+						picture: 'http://' + window.location.host + '/images/browser/small/' + fileName + '.png',
+						link : 'http://www.inspirationengine.com',
+						message: social_text
+					}, function(response) {
+						if(!response){
+							alert("Error occured ");
+						}else if(response.error){
+							alert("Error occured " + response.error);
+						}
+					});
+				} else {
+					alert('User cancelled login or did not fully authorize.');
+				}
+			}, {scope: 'publish_stream,read_stream'});
 		});
 
 		$.ajax({
@@ -1454,7 +1474,8 @@ $(document).ready(function(){
 	FB.init({ 
 		appId:'207296725962034', 
 		cookie:true,
-		status:true, 
+		status:true,
+		oauth  : true, //enable
 		xfbml:true 
 	});
 	

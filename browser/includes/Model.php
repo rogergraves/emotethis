@@ -12,7 +12,36 @@ class SurveyException extends Exception { }
 class SurveyManager{
 
 	function isSurvey($survey_code, $only_enabled = false){
-		if( file_exists($this->getSurveyXML($survey_code)) ){
+		if(SURVEY_STORE == 'DB'){
+			return $this->isSurveyDB($survey_code, $only_enabled);
+		}elseif (SURVEY_STORE == 'XML'){
+			return $this->isSurveyXML($survey_code, $only_enabled);
+		}else{
+			throw new SurveyException("Unkonw survey store: " . SURVEY_STORE);
+		}
+	}
+	
+	function getSurvey($survey_code){
+		if(SURVEY_STORE == 'DB'){
+			return $this->getSurveyDB($survey_code);
+		}elseif (SURVEY_STORE == 'XML'){
+			return $this->getSurveyXML($survey_code);
+		}else{
+			throw new SurveyException("Unkonw survey store: " . SURVEY_STORE);
+		}
+	}
+	
+
+	protected function getSurveyDB($survey_code){
+		return new SurveyDB($survey_code);
+	}
+	
+	protected function isSurveyDB($survey_code, $only_enabled = false){
+		$db = new DB();
+		$select_survey_id = "SELECT id FROM surveys WHERE code = '" . mysql_real_escape_string($survey_code) . "' LIMIT 1";
+		$rows = $db->runQuery($select_survey_id);
+		//print "$select_survey_id";
+		if(is_array($rows) && isset($rows[0])){
 			if(! $only_enabled)
 				return true;
 			else{
@@ -24,19 +53,91 @@ class SurveyManager{
 		return false;
 	}
 	
-	function getSurvey($survey_code){
-		return new Survey($this->getSurveyXML($survey_code));
+	protected function getSurveyXML($survey_code){
+		return new SurveyXML(SURVEY_DIR . $survey_code . ".xml");
 	}
 	
-
-	
-	protected function getSurveyXML($survey_code){
-		return SURVEY_DIR . $survey_code . ".xml";
+	protected function isSurveyXML($survey_code, $only_enabled = false){
+		if( file_exists($this->getSurveyXML($survey_code)) ){
+			if(! $only_enabled)
+				return true;
+			else{
+				$survey = $this->getSurvey($survey_code);
+				if( ! $survey->isDisabled())
+					return true;
+			}
+		}
+		return false;
 	}
 }
 
 
-class Survey{
+class SurveyDB{
+	
+	protected $survey_code;
+	protected $db;
+	protected $survey;
+	
+	function __construct($survey_code) {
+		$this->survey_code = $survey_code;
+		$this->db = new DB();
+		$select_survey = "SELECT * FROM surveys WHERE code = '" . mysql_real_escape_string($survey_code) . "' LIMIT 1";
+		$rows = $this->db->runQuery($select_survey);
+		
+		if(is_array($rows) && isset($rows[0])){
+			$this->survey = $rows[0];
+		}else{
+			throw new SurveyException("Survey " . $survey_code . " not found");
+		}
+	}
+	
+	function isDisabled(){
+		if($this->survey['state'])
+			return true;
+		return false;
+	}
+	
+	function storeRespondentContacts(){
+		if($this->survey['store_respondent_contacts'])
+			return true;
+		return false;
+	}
+	
+	function getThanks(){
+		return '';
+	}
+	
+	function getPassword(){
+		return '';
+	}
+	
+	function hasDemo(){
+		return false;
+	}
+	
+	function getStimulus(){
+		return $this->survey['project_name'];
+	}
+	
+	function getItemImage(){
+		return '';
+	}
+	
+	function getShortStimulus(){
+		return $this->survey['project_name'];
+	}
+	
+	function listQuestionsId(){
+		return array();
+	}
+	
+	function getDemo(){
+		return;
+	}
+}
+
+
+class SurveyXML{
 	
 	protected $xml;
 	
@@ -128,8 +229,6 @@ class Survey{
 	}
 	
 	function listQuestionsId(){
-		$a_demo = $this->xml->xpath('/survey/demo');
-		
 		$a_demo = $this->xml->xpath('/survey/demo');
 		
 		$a_results = array();

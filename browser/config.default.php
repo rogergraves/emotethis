@@ -6,6 +6,8 @@
 	define('SURVEY_DIR', '/var/www/surveys/');
 	define('TEMPLATE_DIR', ROOT_PATH . 'templates/');
 
+
+
 	define('MAIN_SCRIPT', '/browser/index.php');
 	
 	define('DBHOST','localhost');
@@ -20,4 +22,6 @@
 	define('HOMIE_DBNAME','emotethis');
 	define('HOMIE_DBUSER','root');
 	define('HOMIE_DBPASS','');
+	
+	define('SURVEY_STORE','DB');//DB or XML
 ?>
