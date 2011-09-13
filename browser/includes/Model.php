@@ -103,6 +103,10 @@ class SurveyDB{
 		return false;
 	}
 	
+	function getFeedbackPrompt(){
+	    return $this->survey['feedback_prompt'];
+	}
+	
 	function getThanks(){
 		return '';
 	}
@@ -639,6 +643,14 @@ class SurveyResult{
 	}
 	
 	public function setIntensityLevel($intensity_level){
+		if($intensity_level > 100){
+		    $intensity_level = 100;
+		}
+		
+		if($intensity_level < 0 ){
+    		    $intensity_level = 0;
+		}
+		
 		$this->intensity_level = $intensity_level;
 	}
 

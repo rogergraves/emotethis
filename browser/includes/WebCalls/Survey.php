@@ -21,7 +21,9 @@ class GetSurvey extends ACall{
 					
 					if($device == 'phone'){
 						$short_stimulus = (string)$survey->getShortStimulus();
-						return new Answer('ok',array('short_stimulus' => $short_stimulus,'status' => 'disabled'),'json');
+						
+						$store_contacts = $survey->storeRespondentContacts() ? 1 : 0;
+						return new Answer('ok',array('short_stimulus' => $short_stimulus,'status' => 'disabled','store_contacts' => $store_contacts),'json');
 					}else{
 						$survey_tpl = new Template('survey_not_found_body.php');
 						return new Answer('ok',$survey_tpl->process(array()),'json');
@@ -39,7 +41,8 @@ class GetSurvey extends ACall{
 				unset($_SESSION['user_data_id']);
 				if($device == 'phone'){
 					$short_stimulus = (string)$survey->getShortStimulus();
-					return new Answer('ok',array('short_stimulus' => $short_stimulus,'status' => 'ok'),'json');
+					$store_contacts = $survey->storeRespondentContacts() ? 1 : 0;
+					return new Answer('ok',array('short_stimulus' => $short_stimulus,'status' => 'ok', 'store_contacts' => $store_contacts),'json');
 				}
 				$survey_tpl = new Template('survey_ajax.php');
 				return new Answer('ok',$survey_tpl->process(array('survey' => $survey, 'not_welcome' => true)),'json');
@@ -333,7 +336,7 @@ class SetEmail extends ACall{
 			$result_id =& $_SESSION['result_id'];
 			$user_data_id =& $_SESSION['user_data_id'];
 			
-			if(!$result_id) return new Answer('error','Unknow result','json');
+			if(!$result_id) return new Answer('error','Unknow result id','json');
 			
 			$email = $this->getArgument('email');
 			$s_user_obj = NULL;

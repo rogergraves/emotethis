@@ -70,18 +70,24 @@ var App = Ext.apply(new Ext.util.Observable,{
 		    });
 		    myEl.set({ 'src' : imgArr[i]});
 		}
+		
+
 	},
 	
 	bootstrap: function() {
 		var self = App;
-/*
-		FB.init({ 
-		    appId:'207296725962034', 
-		    cookie:true,
-		    status:true, 
-		    xfbml:true 
-		});
-*/
+
+		if(Apple.isProduct()){
+		    FB.init({ 
+			appId:'207296725962034', 
+			cookie:true,
+			status:true,
+			oauth  : true, //enable
+			xfbml:true 
+		    });
+		}
+
+
 		self.preload(self.preloadImages,function(){
 			self.initUi();
 			self.initEventListener();
@@ -94,6 +100,10 @@ var App = Ext.apply(new Ext.util.Observable,{
 		App.surveyCodeError = false;
 		App.surveyData = data;
 		App.surveyLoaded = true;
+		
+		App.surveyDisabled = (data['status'] && data['status'] == 'disabled') ? true : false;
+		App.storeContacts = data['store_contacts'];
+		
 		var els = Ext.select('.short-stimulus-place');
 		els.each(function(el){
 			el.setHTML(data.short_stimulus);
@@ -351,17 +361,44 @@ var App = Ext.apply(new Ext.util.Observable,{
 		
 		var faceRow = self.ui.intensityPage.faceRow;
 		var fileName = faceName + "_intensity_" + faceRow;
+		
 		/*
 		Ext.get('facebook_url').set({"href" : "http://www.facebook.com/dialog/feed?app_id=207296725962034&display=touch&message="
 		+ encodeURIComponent(social_text) + "&picture=" + 'http://' + window.location.host + '/images/browser/small/' + fileName + '.png' +
 		"&link=http://www.inspirationengine.com&redirect_uri=http://" + window.location.host});
 		*/
-
-		Ext.get('facebook_url').set({"href" : "http://www.facebook.com/dialog/feed?app_id=207296725962034&display=touch&message="
-		    + encodeURIComponent(social_text) + "&picture=" + 'http://' + window.location.host + '/images/browser/small/' + fileName + '.png' +
-		    "&link=http://www.inspirationengine.com&redirect_uri=" +
-		    encodeURIComponent('http://' + window.location.host + "/close.html") + "&sdk=joey",
-		    "target" : "_blank"});
+		
+		if(Apple.isProduct()){
+		    self.mon(Ext.get('facebook_url'), {
+			tap: function(){
+				FB.login(function(response) {
+				    if (response.authResponse) {
+					var userId = response.authResponse.userID;
+					FB.api( '/' + userId +'/feed', 'post',{
+						picture: 'http://' + window.location.host + '/images/browser/small/' + fileName + '.png',
+						link : 'http://www.inspirationengine.com',
+						message: social_text
+					}, function(response) {
+						if(!response){
+							alert("Error occured ");
+						}else if(response.error){
+							alert("Error occured " + response.error);
+						}
+					});
+				    } else {
+					alert('User cancelled login or did not fully authorize.');
+				    }
+				}, {scope: 'publish_stream,read_stream'});
+			},
+			scope: App
+		    });
+		}else{
+		    Ext.get('facebook_url').set({"href" : "http://www.facebook.com/dialog/feed?app_id=207296725962034&display=touch&message="
+			+ encodeURIComponent(social_text) + "&picture=" + 'http://' + window.location.host + '/images/browser/small/' + fileName + '.png' +
+			"&link=http://www.inspirationengine.com&redirect_uri=" +
+			encodeURIComponent('http://' + window.location.host + "/close.html") + "&sdk=joey",
+			"target" : "_blank"});
+		}
 
 		/*
 		self.mon(Ext.get('facebook_url'), {
@@ -409,24 +446,29 @@ App.Ui = Ext.extend(Ext.Container, {
 	thanksPage: null,
 	
 	initComponent: function() {
-		//this.stimulusPage = new App.Ui.StimulusPage();
-		//this.tutorialPage = new App.Ui.TutorialPage();
-		//this.stimulusPage = new App.Ui.WelcomePage();
-		this.emotePage = new App.Ui.EmotePage();
-		this.intensityPage = new App.Ui.IntensityPage();
-		this.verbatimPage = new App.Ui.VerbatimPage();
-		this.thanksPage = new App.Ui.ThanksPage();
+		var pages = [];
+		if(App.surveyDisabled){
+		    pages = [
+			//new App.Ui.ThanksPage()
+			new App.Ui.DisabledPage()
+		    ];
+		}else{
+		    this.emotePage = new App.Ui.EmotePage();
+		    this.intensityPage = new App.Ui.IntensityPage();
+		    this.verbatimPage = new App.Ui.VerbatimPage();
+		    this.thanksPage = new App.Ui.ThanksPage();
 		
-		var pages = [
+		    var pages = [
 			this.emotePage,
 			this.intensityPage,
 			this.verbatimPage,
 			this.thanksPage
-		];
+		    ];
 		
-		if( ! App.surveyLoaded){
+		    if( ! App.surveyLoaded){
 			this.codePage = new App.Ui.CodePage();
 			pages.unshift(this.codePage);
+		    }
 		}
 		
 		//add event handlers
@@ -442,6 +484,49 @@ App.Ui = Ext.extend(Ext.Container, {
 		App.Ui.superclass.initComponent.call(this);
 	}
 });
+
+App.Ui.DisabledToolbar = Ext.extend(Ext.Toolbar, {
+	initComponent: function() {
+		var config = {
+			title: '<div style="padding-top: 5px;"><img src="../images/e.mote-logo.png"></div>',
+			dock: 'top',
+			cls: 'emote-toolbar-blue',
+			layout: 'hbox'
+		};
+		Ext.apply(this, config);
+		App.Ui.DisabledToolbar.superclass.initComponent.call(this);
+	}
+});
+Ext.reg('App.Ui.DisabledToolbar', App.Ui.DisabledToolbar);
+
+
+App.Ui.DisabledPage = Ext.extend(Ext.Panel, {
+	initComponent: function() {
+		var toolBar = new App.Ui.DisabledToolbar();
+		var config = {
+			fullscreen: true,
+			layout: 'card',
+			scroll: 'vertical',
+			cls: 'disabled-bg',
+			html : '<div style="text-align: center;color: white;padding-top: 10%;font-family: Verdana, Arial, Helvetica, sans-serif;">' + 
+				'The e.mote&#0153;  you are attempting to access is currently unavailable.' + 
+				'</div>',
+			dockedItems:[
+			             toolBar
+			]
+		};
+		
+		Ext.apply(this, config);
+		App.Ui.DisabledPage.superclass.initComponent.call(this);
+	}
+	, afterRender: function() {
+		App.Ui.DisabledPage.superclass.afterRender.call(this);
+		
+	}
+
+});
+Ext.reg('App.Ui.DisabledPage', App.Ui.DisabledPage);
+
 
 
 App.Ui.StimulusPageArea = Ext.extend(Ext.Panel, {
@@ -737,6 +822,7 @@ App.Ui.EmotePage = Ext.extend(Ext.Panel, {
 	maxHeight: 325,
 	faceHeight: 260,
 	showInstruction: true,
+	nextEnabled: false,
 	
 	faceNames: {
 		'1_1': 'outraged',
@@ -840,9 +926,13 @@ App.Ui.EmotePage = Ext.extend(Ext.Panel, {
 		    Ext.get('emote-instruction').hide();
 		    this.showInstruction = false;
 		}
-		var button = this.dockedItems.items[0].items.items[1];
-		if(button.disabled){
-			button.enable();
+		
+		if(! this.nextEnabled){
+			var button = this.dockedItems.items[0].items.items[1];
+			if(button.disabled){
+				button.enable();
+			}
+			this.nextEnabled = true;
 		}
 
 		
@@ -1002,6 +1092,7 @@ App.Ui.IntensityPage = Ext.extend(Ext.Panel, {
 	faceName: '',
 	intensity_level: 50,
 	showInstruction: true,
+	nextEnabled: false,
 		
 	initComponent: function() {
 		var toolBar = new App.Ui.IntensityPageToolbar();
@@ -1074,9 +1165,12 @@ App.Ui.IntensityPage = Ext.extend(Ext.Panel, {
 		    Ext.get('intensity-instruction').hide();
 		    this.showInstruction = false;
 		}
-		var button = this.dockedItems.items[0].items.items[2];
-		if(button.disabled){
-			button.enable();
+		if(! this.nextEnabled){
+			var button = this.dockedItems.items[0].items.items[2];
+			if(button.disabled){
+				button.enable();
+			}
+			this.nextEnabled = true;
 		}
 		var el_y = e.pageY - this.intensityEl.getY();
 		var bg_height = this.start_y - e.pageY;
@@ -1209,20 +1303,47 @@ App.Ui.ThanksPage = Ext.extend(Ext.Panel, {
 	initComponent: function() {
 	
 		var toolBar = new App.Ui.ThanksToolbar();
-
+		var html;
+		
+		if(App.storeContacts){
+			html = '<div id="thanks-block-mail">' + 
+			'<div id="thanks-msg" class="x-hidden-visibility">Thank you for e.moting!</div>' +
+			'<div class="main-block">' +
+			'<div id="email-block">' + 
+			'<div>Start a conversation with us... Enter your email below - we\'d be delighted to contact you!</div>' + 
+			'<div id="error-block" class="x-hidden-visibility">' +
+			'<span class="typo">EMAIL TYPO DETECTED:</span><br/>' + 
+			'<span>Please re-check the email address you entered.</span>' + 
+			'</div>' + 
+			'<form id="send-email">' +
+			'<input type="text" id="input-email" value=""><br/>' +
+			'<input type="image" src="../images/phone/contact_me_button.png">' +
+			'</form>' + 
+			'</div>' +
+			'<div class="share-block">' +
+			'<div id="icons-text">Share your e.mote&#0153; with your friends and family.</div>' + 
+			'<a id="facebook_url" href="#"><img src="../images/facebook_icon.png"></a>' + 
+			'<a id="twitter_url" href="#" target="_blank"><img src="../images/twitter_icon.png"></a>' +
+			'</div>' +
+			'</div>' +
+			'</div>';
+		}else{
+			html = '<div id="thanks-block"><div id="thanks-title">Thank you for e.moting!</div>' + 
+			'<div class="share-block">' +
+			'<a id="facebook_url" href="#"><img src="../images/facebook_icon.png"></a>' + 
+			'<a id="twitter_url" href="#" target="_blank"><img src="../images/twitter_icon.png"></a>' +
+			'</div>' +
+			'<div id="thanks-close">You may now close this browser window.</div>' + 
+			'</div>';
+		}
+		
 		var config = {
 			title: '&nbsp;',
 			layout:'card',
 			fullscreen: true,
 			cls: 'stimulus-bg',
 			activeItem: 0, // make sure the active item is set on the container config!
-			html: '<div id="thanks-block"><div id="thanks-title">Thank you for e.moting!</div>' + 
-			'<div class="share-block">' +
-			'<a id="facebook_url" href="#"><img src="../images/facebook_icon.png"></a>' + 
-			'<a id="twitter_url" href="#" target="_blank"><img src="../images/twitter_icon.png"></a>' +
-			'</div>' +
-			'<div id="thanks-close">You may now close this browser window.</div>' + 
-			'</div>',
+			html: html,
 			dockedItems:[
 			             toolBar
 			]
@@ -1230,6 +1351,53 @@ App.Ui.ThanksPage = Ext.extend(Ext.Panel, {
 		Ext.apply(this, config);
 		App.Ui.ThanksPage.superclass.initComponent.call(this);
 	}
+	
+	,afterRender: function() {
+		App.Ui.ThanksPage.superclass.afterRender.apply(this, arguments);
+		
+		this.mon(Ext.get('send-email'), {
+			submit: function(ev){
+				ev.preventDefault();
+				var errEl = Ext.get(Ext.query("#thanks-block-mail #error-block"));
+				var email = Ext.get('input-email').getValue();
+				if(!checkEmail(email)){
+					Ext.get(Ext.query("#thanks-block-mail #error-block .typo")).setHTML('EMAIL TYPO DETECTED:');
+					errEl.removeCls(['x-hidden-visibility']);
+				}else{
+					
+					errEl.addCls(['x-hidden-visibility']);
+					Ext.get('preloading-win').setVisibilityMode(Element.DISPLAY).show(true);
+					
+					Ext.Ajax.request({
+						url: App.urlPath,
+						method: 'GET',
+						params: { action : 'setemail' , email: email, device: 'phone' , out: 'json'},
+						success: function(result){
+							Ext.get('preloading-win').setVisibilityMode(Element.DISPLAY).hide(true);
+							
+							//console.log(result);
+							var data = Ext.util.JSON.decode(result.responseText);
+							if(data.status == 'error'){
+								Ext.get(Ext.query("#thanks-block-mail #error-block .typo")).setHTML(data.msg + ':');
+								
+								errEl.removeCls(['x-hidden-visibility']);
+							}else{
+								Ext.get(Ext.query("#thanks-block-mail #email-block")).addCls(['x-hidden-visibility']);
+								Ext.get(Ext.query("#thanks-block-mail #thanks-msg")).removeCls(['x-hidden-visibility']);
+							}
+						},
+						failure: function ( result, request) {
+							Ext.get('preloading-win').setVisibilityMode(Element.DISPLAY).hide(true);
+							
+							Ext.get(Ext.query("#thanks-block-mail #error-block .typo")).setHTML('SERVER ERROR:');
+							errEl.removeCls(['x-hidden-visibility']);
+						} 
+					});
+				}
+			}
+		});
+	}
+
 });
 Ext.reg('App.Ui.ThanksPage', App.Ui.ThanksPage);
 
@@ -1243,5 +1411,18 @@ Ext.setup({
 		scope: App
 });
 
-//Preloader
-//http://www.ajaxblender.com/howto-create-preloader-like-at-extjs-com.html
+var Apple = {};
+Apple.UA = navigator.userAgent;
+Apple.Device = false;
+Apple.Types = ["iPhone", "iPod", "iPad"];
+
+Apple.isProduct = function(){
+    if(Apple.UA.match(/iPhone|iPod|iPad/i)) {
+	return true;
+    }
+    return false;
+};
+
+function checkEmail(value){
+    return /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i.test(value);
+};

@@ -306,7 +306,16 @@ You are about to <span class="bold-text">e.mote</span>&#0153;, a fast and fun wa
 					
 						<div id="contact-email-block">
 						    <div class="message">
-							Start a conversation with us... Enter your email below - we'd be delighted to contact you!
+							<?php
+							    $prompt = $tpl_vars['survey']->getFeedbackPrompt();
+							    if($prompt){
+								print $prompt;
+							    }else{
+							?>
+							    Start a conversation with us... Enter your email below - we'd be delighted to contact you!
+							<?php
+							    }
+							?>
 						    </div>
 						    <div class="error-block non-visible">
 							<span class="typo">EMAIL TYPO DETECTED:</span><br/>

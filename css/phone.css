@@ -425,3 +425,56 @@ nobr {
 .x-button.emote-toolbar-button.x-item-disabled{
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%,   color-stop(0.7, rgb(3,43,117) ), color-stop(0.33, rgb(106,127,183))) !important;
 }
+
+.disabled-bg{
+	background: url('../images/browser/bg.jpg') repeat-x;
+}
+
+#thanks-block-mail{
+    font-size: 0.8em;
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%;
+}
+
+#thanks-block-mail #error-block{
+	margin-top: 40px;
+	margin-bottom: 10px;
+}
+
+#thanks-block-mail .main-block{
+	text-align: center;
+	margin-top: 20px;
+}
+
+#thanks-block-mail .typo{
+	color: #df7272;
+}
+
+#thanks-block-mail #input-email{
+	margin-bottom: 10px;
+}
+
+#thanks-block-mail #send-email{
+}
+
+#thanks-block-mail .share-block{
+	margin-top: 40px;
+}
+
+#thanks-block-mail .share-block #facebook_url{
+    margin-right: 20px;
+}
+
+#thanks-block-mail #icons-text{
+	margin-bottom: 20px;
+}
+
+#thanks-block-mail #thanks-msg{
+	position: relative;
+	text-align: center;
+	font-size: 1.8em;
+	top: 100px;
+}
+
