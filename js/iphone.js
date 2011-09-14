@@ -144,6 +144,8 @@ var App = Ext.apply(new Ext.util.Observable,{
 					self.ui.on('orientationchange', function() {
 					    self.orientationUpdate();
 					});
+					
+					self.orientationUpdate();
 				},
 				failure: function ( result, request) { 
 					App.surveyCodeError = true;
@@ -151,6 +153,7 @@ var App = Ext.apply(new Ext.util.Observable,{
 					self.ui.on('orientationchange', function() {
 					    self.orientationUpdate();
 					});
+					self.orientationUpdate();
 				} 
 			});
 		}else{
@@ -158,6 +161,7 @@ var App = Ext.apply(new Ext.util.Observable,{
 			self.ui.on('orientationchange', function() {
 			    self.orientationUpdate();
 			});
+			self.orientationUpdate();
 		}
 	}
 	
