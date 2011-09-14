@@ -112,6 +112,14 @@ var App = Ext.apply(new Ext.util.Observable,{
 		elsB.each(function(el){
 			el.setHTML(data.short_stimulus.toUpperCase());
 		});
+		
+		if(data['feedback_prompt']){
+			var elsX = Ext.select('#thanks-block-mail-msg');
+			elsX.each(function(el){
+				el.setHTML(data['feedback_prompt']);
+			});
+		}
+		
 		//Ext.get(Ext.DomQuery.selectNode('title')).setHTML("How do you feel about " + data.short_stimulus + "?");
 		
 	}
@@ -1311,10 +1319,10 @@ App.Ui.ThanksPage = Ext.extend(Ext.Panel, {
 			'<div id="thanks-msg" class="x-hidden-visibility">Thank you for e.moting!</div>' +
 			'<div class="main-block">' +
 			'<div id="email-block">' + 
-			'<div>Start a conversation with us... Enter your email below - we\'d be delighted to contact you!</div>' + 
+			'<div id="thanks-block-mail-msg">Start a conversation with us... Enter your email below - we\'d be delighted to contact you!</div>' + 
 			'<div id="error-block" class="x-hidden-visibility">' +
 			'<span class="typo">EMAIL TYPO DETECTED:</span><br/>' + 
-			'<span>Please re-check the email address you entered.</span>' + 
+			'<span class="typo-desc">Please re-check the email address you entered.</span>' + 
 			'</div>' + 
 			'<form id="send-email">' +
 			'<input type="text" id="input-email" value=""><br/>' +
@@ -1364,8 +1372,13 @@ App.Ui.ThanksPage = Ext.extend(Ext.Panel, {
 				ev.preventDefault();
 				var errEl = Ext.get(Ext.query("#thanks-block-mail #error-block"));
 				var email = Ext.get('input-email').getValue();
-				if(!checkEmail(email)){
+				if(!email){
+					Ext.get(Ext.query("#thanks-block-mail #error-block .typo")).setHTML('NO EMAIL ENTERED:');
+					Ext.get(Ext.query("#thanks-block-mail #error-block .typo-desc")).setHTML('Please enter your email address below.');
+					errEl.removeCls(['x-hidden-visibility']);
+				}else if(!checkEmail(email)){
 					Ext.get(Ext.query("#thanks-block-mail #error-block .typo")).setHTML('EMAIL TYPO DETECTED:');
+					Ext.get(Ext.query("#thanks-block-mail #error-block .typo-desc")).setHTML('Please re-check the email address you entered.');
 					errEl.removeCls(['x-hidden-visibility']);
 				}else{
 					
@@ -1382,8 +1395,8 @@ App.Ui.ThanksPage = Ext.extend(Ext.Panel, {
 							//console.log(result);
 							var data = Ext.util.JSON.decode(result.responseText);
 							if(data.status == 'error'){
-								Ext.get(Ext.query("#thanks-block-mail #error-block .typo")).setHTML(data.msg + ':');
-								
+								Ext.get(Ext.query("#thanks-block-mail #error-block .typo")).setHTML('SUBMIT ERROR:');
+								Ext.get(Ext.query("#thanks-block-mail #error-block .typo-desc")).setHTML(data.msg);
 								errEl.removeCls(['x-hidden-visibility']);
 							}else{
 								Ext.get(Ext.query("#thanks-block-mail #email-block")).addCls(['x-hidden-visibility']);
@@ -1394,6 +1407,7 @@ App.Ui.ThanksPage = Ext.extend(Ext.Panel, {
 							Ext.get('preloading-win').setVisibilityMode(Element.DISPLAY).hide(true);
 							
 							Ext.get(Ext.query("#thanks-block-mail #error-block .typo")).setHTML('SERVER ERROR:');
+							Ext.get(Ext.query("#thanks-block-mail #error-block .typo-desc")).setHTML('System error.');
 							errEl.removeCls(['x-hidden-visibility']);
 						} 
 					});

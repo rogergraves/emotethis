@@ -23,7 +23,10 @@ class GetSurvey extends ACall{
 						$short_stimulus = (string)$survey->getShortStimulus();
 						
 						$store_contacts = $survey->storeRespondentContacts() ? 1 : 0;
-						return new Answer('ok',array('short_stimulus' => $short_stimulus,'status' => 'disabled','store_contacts' => $store_contacts),'json');
+						$feedback_prompt = $survey->getFeedbackPrompt();
+						
+						return new Answer('ok',array('short_stimulus' => $short_stimulus,'status' => 'disabled',
+										'store_contacts' => $store_contacts, 'feedback_prompt' => $feedback_prompt),'json');
 					}else{
 						$survey_tpl = new Template('survey_not_found_body.php');
 						return new Answer('ok',$survey_tpl->process(array()),'json');
@@ -41,8 +44,12 @@ class GetSurvey extends ACall{
 				unset($_SESSION['user_data_id']);
 				if($device == 'phone'){
 					$short_stimulus = (string)$survey->getShortStimulus();
+					
 					$store_contacts = $survey->storeRespondentContacts() ? 1 : 0;
-					return new Answer('ok',array('short_stimulus' => $short_stimulus,'status' => 'ok', 'store_contacts' => $store_contacts),'json');
+					$feedback_prompt = $survey->getFeedbackPrompt();
+					
+					return new Answer('ok',array('short_stimulus' => $short_stimulus,'status' => 'ok', 
+								'store_contacts' => $store_contacts, 'feedback_prompt' => $feedback_prompt),'json');
 				}
 				$survey_tpl = new Template('survey_ajax.php');
 				return new Answer('ok',$survey_tpl->process(array('survey' => $survey, 'not_welcome' => true)),'json');

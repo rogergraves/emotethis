@@ -432,20 +432,20 @@ nobr {
 
 #thanks-block-mail{
     font-size: 0.8em;
-    margin-top: 10px;
+    margin-top: 0px;
     padding-left: 10px;
     padding-right: 10px;
     width: 100%;
 }
 
 #thanks-block-mail #error-block{
-	margin-top: 40px;
+	margin-top: 15px;
 	margin-bottom: 10px;
 }
 
 #thanks-block-mail .main-block{
 	text-align: center;
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 #thanks-block-mail .typo{
@@ -460,7 +460,7 @@ nobr {
 }
 
 #thanks-block-mail .share-block{
-	margin-top: 40px;
+	margin-top: 30px;
 }
 
 #thanks-block-mail .share-block #facebook_url{
