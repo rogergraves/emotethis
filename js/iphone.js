@@ -71,7 +71,6 @@ var App = Ext.apply(new Ext.util.Observable,{
 		    myEl.set({ 'src' : imgArr[i]});
 		}
 		
-
 	},
 	
 	bootstrap: function() {
@@ -457,8 +456,7 @@ App.Ui = Ext.extend(Ext.Container, {
 		    this.intensityPage = new App.Ui.IntensityPage();
 		    this.verbatimPage = new App.Ui.VerbatimPage();
 		    this.thanksPage = new App.Ui.ThanksPage();
-		
-		    var pages = [
+		    pages = [
 			this.emotePage,
 			this.intensityPage,
 			this.verbatimPage,
@@ -470,7 +468,6 @@ App.Ui = Ext.extend(Ext.Container, {
 			pages.unshift(this.codePage);
 		    }
 		}
-		
 		//add event handlers
 		var config = {
 			fullscreen: true,
@@ -1355,7 +1352,10 @@ App.Ui.ThanksPage = Ext.extend(Ext.Panel, {
 	,afterRender: function() {
 		App.Ui.ThanksPage.superclass.afterRender.apply(this, arguments);
 		
-		this.mon(Ext.get('send-email'), {
+		var sendEmailEl = Ext.get('send-email');
+		
+		if(sendEmailEl){
+		this.mon(sendEmailEl, {
 			submit: function(ev){
 				ev.preventDefault();
 				var errEl = Ext.get(Ext.query("#thanks-block-mail #error-block"));
@@ -1396,6 +1396,7 @@ App.Ui.ThanksPage = Ext.extend(Ext.Panel, {
 				}
 			}
 		});
+		}
 	}
 
 });
