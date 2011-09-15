@@ -205,6 +205,7 @@ var App = Ext.apply(new Ext.util.Observable,{
 			if(h > 400 || h > w){
 				return;
 			}
+			
 			Ext.get('landscape-overlay').setVisibilityMode(Element.DISPLAY).show(true);
 		    }else{
 			Ext.get('landscape-overlay').setVisibilityMode(Element.DISPLAY).hide(true);
@@ -711,6 +712,16 @@ App.Ui.CodePage = Ext.extend(Ext.Panel, {
 							el.setVisibilityMode(Element.DISPLAY);
 							el.show(true);
 							
+						}else if(data.status == 'disabled'){
+							var disabledPage = new App.Ui.DisabledPage();
+							App.ui.add(disabledPage);
+							var animation = {
+							    type: 'flip',
+							    direction: 'left'
+							};
+							App.ui.setActiveItem(disabledPage,animation);
+
+							//alert("Disabled");
 						}else{
 							App.setSurvey(data);
 							App.nextCode();
@@ -1128,7 +1139,22 @@ App.Ui.IntensityPage = Ext.extend(Ext.Panel, {
 		this.intensityEl = Ext.get('intensity-big-area');
 		this.intensityFaceEl = Ext.get('intensity-area');
 		this.intensityBgEl = Ext.get('intensity-bg2');
-		this.start_y = this.intensityBgEl.getY();
+		
+		var notstarty = false;
+		if("onorientationchange" in window){
+			if( Ext.orientation == 'landscape'){
+				var self = this;
+				App.ui.on('orientationchange', function() {
+					if( ! self.start_y){
+						self.start_y = self.intensityBgEl.getY();
+					}
+				});
+			}
+		}
+
+		
+		if(!notstarty)
+		    this.start_y = this.intensityBgEl.getY();
 /*		
 		this.mon(this.intensityEl, {
 			touchmove: this.onSelectIntensity,
@@ -1164,6 +1190,8 @@ App.Ui.IntensityPage = Ext.extend(Ext.Panel, {
 		Ext.get('iface-name-title').update(this.faceName.toLowerCase());
 		
 		//Ext.get('iface-name').update(this.faceName.toLowerCase());
+		
+		
 		var maxBgHeight = this.start_y - this.intensityEl.getY();//this.maxBgHeight
 		var bg_height = Math.ceil(maxBgHeight / 5) - 15;
 		this.intensityBgEl.setStyle('height', bg_height + 'px' );
@@ -1181,6 +1209,8 @@ App.Ui.IntensityPage = Ext.extend(Ext.Panel, {
 			}
 			this.nextEnabled = true;
 		}
+		
+		
 		var el_y = e.pageY - this.intensityEl.getY();
 		var bg_height = this.start_y - e.pageY;
 		
