@@ -1330,7 +1330,7 @@ App.Ui.ThanksPage = Ext.extend(Ext.Panel, {
 			'</form>' + 
 			'</div>' +
 			'<div class="share-block">' +
-			'<div id="icons-text">Share your e.mote&#0153; with your friends and family.</div>' + 
+			'<div id="icons-text">Share your e.mote&#0153; with your<br/> friends and family.</div>' + 
 			'<a id="facebook_url" href="#"><img src="../images/facebook_icon.png"></a>' + 
 			'<a id="twitter_url" href="#" target="_blank"><img src="../images/twitter_icon.png"></a>' +
 			'</div>' +
