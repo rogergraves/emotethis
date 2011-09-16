@@ -1144,7 +1144,7 @@ App.Ui.IntensityPage = Ext.extend(Ext.Panel, {
 		if("onorientationchange" in window){
 			if( Ext.orientation == 'landscape'){
 				var self = this;
-				App.ui.on('orientationchange', function() {
+				self.on('orientationchange', function() {
 					if( ! self.start_y){
 						self.start_y = self.intensityBgEl.getY();
 					}
