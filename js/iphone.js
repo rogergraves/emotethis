@@ -1143,12 +1143,6 @@ App.Ui.IntensityPage = Ext.extend(Ext.Panel, {
 		var notstarty = false;
 		if("onorientationchange" in window){
 			if( Ext.orientation == 'landscape'){
-				var self = this;
-				self.on('orientationchange', function() {
-					if( ! self.start_y){
-						self.start_y = self.intensityBgEl.getY();
-					}
-				});
 				notstarty = true;
 			}
 		}
@@ -1192,10 +1186,11 @@ App.Ui.IntensityPage = Ext.extend(Ext.Panel, {
 		
 		//Ext.get('iface-name').update(this.faceName.toLowerCase());
 		
-		
-		var maxBgHeight = this.start_y - this.intensityEl.getY();//this.maxBgHeight
-		var bg_height = Math.ceil(maxBgHeight / 5) - 15;
-		this.intensityBgEl.setStyle('height', bg_height + 'px' );
+		if(this.start_y){
+			var maxBgHeight = this.start_y - this.intensityEl.getY();//this.maxBgHeight
+			var bg_height = Math.ceil(maxBgHeight / 5) - 15;
+			this.intensityBgEl.setStyle('height', bg_height + 'px' );
+		}
 	}
 	
 	,onSelectIntensity: function(e){
@@ -1211,6 +1206,16 @@ App.Ui.IntensityPage = Ext.extend(Ext.Panel, {
 			this.nextEnabled = true;
 		}
 		
+		
+		if(!this.start_y){
+			this.start_y = this.intensityBgEl.getY();
+			var s = this.intensityBgEl.getSize();
+			this.start_y += s.height;
+			
+			var maxBgHeight = this.start_y - this.intensityEl.getY();//this.maxBgHeight
+			var bg_height = Math.ceil(maxBgHeight / 5) - 15;
+			this.intensityBgEl.setStyle('height', bg_height + 'px' );
+		}
 		
 		var el_y = e.pageY - this.intensityEl.getY();
 		var bg_height = this.start_y - e.pageY;
