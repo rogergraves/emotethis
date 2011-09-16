@@ -1149,6 +1149,7 @@ App.Ui.IntensityPage = Ext.extend(Ext.Panel, {
 						self.start_y = self.intensityBgEl.getY();
 					}
 				});
+				notstarty = true;
 			}
 		}
 
