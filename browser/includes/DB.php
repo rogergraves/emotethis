@@ -22,6 +22,7 @@ class DB
 		if (!DB::$db || !is_resource(DB::$db)) {
 			throw new DbException("Db error " . mysql_errno(DB::$db) . ": " . mysql_error(DB::$db) );
 		}
+		mysql_set_charset('utf8');
 	}
 	
 	public static function mysql_escape($value){
@@ -120,6 +121,7 @@ class HomieDB{
 		if (!HomieDB::$db || !is_resource(HomieDB::$db)) {
 			throw new DbException("Db error " . mysql_errno(HomieDB::$db) . ": " . mysql_error(HomieDB::$db) );
 		}
+		mysql_set_charset('utf8');
 	}
 	
 	public function runQuery($sql, $return = true,$fetchObj = false){

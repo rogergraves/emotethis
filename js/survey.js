@@ -1331,7 +1331,8 @@ function createSurvey(){
 		return false;
 	});
 	
-	$('title').text("How do you feel about " + $('#short-stimulus').text() + "?");
+	document.title = "How do you feel about " + $('#short-stimulus').text() + "?";
+	//$('title').text("How do you feel about " + $('#short-stimulus').text() + "?"); // wrong
 	
 	var sendEl = $("#send-email");
 	if(sendEl){

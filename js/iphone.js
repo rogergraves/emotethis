@@ -468,17 +468,20 @@ App.Ui = Ext.extend(Ext.Container, {
 		    this.emotePage = new App.Ui.EmotePage();
 		    this.intensityPage = new App.Ui.IntensityPage();
 		    this.verbatimPage = new App.Ui.VerbatimPage();
-		    this.thanksPage = new App.Ui.ThanksPage();
+//		    this.thanksPage = new App.Ui.ThanksPage();
 		    pages = [
 			this.emotePage,
 			this.intensityPage,
-			this.verbatimPage,
-			this.thanksPage
+			this.verbatimPage
+//			this.thanksPage
 		    ];
 		
 		    if( ! App.surveyLoaded){
 			this.codePage = new App.Ui.CodePage();
 			pages.unshift(this.codePage);
+		    }else{
+			this.thanksPage = new App.Ui.ThanksPage();
+			pages.push(this.thanksPage);
 		    }
 		}
 		//add event handlers
@@ -724,6 +727,11 @@ App.Ui.CodePage = Ext.extend(Ext.Panel, {
 							//alert("Disabled");
 						}else{
 							App.setSurvey(data);
+							var thanksPage = new App.Ui.ThanksPage();
+							App.ui.thanksPage = thanksPage;
+							App.ui.add(thanksPage);
+							App.ui.doLayout();
+//							alert("X");
 							App.nextCode();
 						}
 						Ext.get('preloading-win').setVisibilityMode(Element.DISPLAY).hide(true);
@@ -1349,7 +1357,7 @@ App.Ui.ThanksPage = Ext.extend(Ext.Panel, {
 	
 		var toolBar = new App.Ui.ThanksToolbar();
 		var html;
-		
+
 		if(App.storeContacts){
 			html = '<div id="thanks-block-mail">' + 
 			'<div id="thanks-msg" class="x-hidden-visibility">Thank you for e.moting!</div>' +
@@ -1384,6 +1392,7 @@ App.Ui.ThanksPage = Ext.extend(Ext.Panel, {
 		
 		var config = {
 			title: '&nbsp;',
+			hidden : true,
 			layout:'card',
 			fullscreen: true,
 			cls: 'stimulus-bg',

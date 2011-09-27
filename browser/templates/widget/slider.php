@@ -2,7 +2,7 @@
 	$a_nav_dots = array();
 ?>
 
-	<div id="short-stimulus"><?= $tpl_vars['survey']->getShortStimulus() ?></div>
+	<div id="short-stimulus" style="display: none;"><?= $tpl_vars['survey']->getShortStimulus() ?></div>
 	<div id="instruction-header" ><div id="instruction-header-text">Move mouse up and down near emoticon to select intensity. Click to set.</div></div>
 	<div id="slider-nav">
 		<div id="back-button">
