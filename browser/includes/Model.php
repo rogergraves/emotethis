@@ -104,7 +104,8 @@ class SurveyDB{
 	}
 	
 	function getFeedbackPrompt(){
-	    return utf8_encode($this->survey['feedback_prompt']);
+//	    return utf8_encode($this->survey['feedback_prompt']);
+	    return $this->survey['feedback_prompt'];
 	}
 	
 	function getThanks(){
