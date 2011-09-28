@@ -7,6 +7,10 @@ require_once(ROOT_PATH . 'includes/Emotion.php');
  * XML based now
  * */
 
+function wrap_word($word){
+	return wordwrap($word, 20, " ",true);
+}
+
 class SurveyException extends Exception { }
 
 class SurveyManager{
@@ -121,7 +125,12 @@ class SurveyDB{
 	}
 	
 	function getStimulus(){
-		return $this->survey['project_name'];
+		$stimulus = $this->survey['project_name'];
+		if(strlen($stimulus) > 25){
+			$a_stimulus = preg_split('/[\s,]+/', $stimulus);
+			$stimulus = join(' ', array_map('wrap_word', $a_stimulus));
+		}
+		return $stimulus;
 	}
 	
 	function getItemImage(){
@@ -129,7 +138,12 @@ class SurveyDB{
 	}
 	
 	function getShortStimulus(){
-		return $this->survey['project_name'];
+		$stimulus = $this->survey['project_name'];
+		if(strlen($stimulus) > 25){
+			$a_stimulus = preg_split('/[\s,]+/', $stimulus);
+			$stimulus = join(' ', array_map('wrap_word', $a_stimulus));
+		}
+		return $stimulus;
 	}
 	
 	function listQuestionsId(){

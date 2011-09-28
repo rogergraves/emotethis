@@ -731,6 +731,7 @@ App.Ui.CodePage = Ext.extend(Ext.Panel, {
 							App.ui.thanksPage = thanksPage;
 							App.ui.add(thanksPage);
 							App.ui.doLayout();
+							App.setSurvey(data);
 //							alert("X");
 							App.nextCode();
 						}
