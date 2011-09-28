@@ -755,3 +755,69 @@ body{
 	margin-top:2px; text-align: center; color: white; height: 40px;color: #FBDB2A;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 }
+
+#short-stimulus{
+	display: none;
+}
+
+#contact-email-block{
+	padding-top: 25px;
+	margin-left: 20px;
+	margin-right: 20px;
+	text-align: center;
+}
+
+#contact-email-block .input-email{
+	float: left;
+	width: 220px;
+	height: 32px;
+	margin-left: 9px;
+}
+
+#contact-email-block .input-email input{
+	border: 1px solid #fff;
+	width: 210px;
+	height: 30px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+
+#contact-email-block .message{
+	font-size: 14px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: white;
+	margin-bottom: 30px;
+}
+
+#contact-email-block .error-block{
+	margin-bottom: 10px;
+}
+
+#contact-email-block .error-block .typo{
+	color: #ffee3f; 
+	font-size: 12px;
+}
+
+#contact-email-block .error-block .error-message{
+	color: white;
+	font-size: 12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+#contact-email-block #survey-loader-img{
+	display: none;
+}
+
+#thanks-message{
+	color: white;
+	padding-top: 15px;
+	font-size: 16px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-align: center;
+	font-weight: bold;
+}
+
+
+#thanks-message .message{
+	padding-top: 70px;
+}
