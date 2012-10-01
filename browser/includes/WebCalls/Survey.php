@@ -13,6 +13,16 @@ class GetSurvey extends ACall{
 				$survey_code = strtoupper($this->getArgument('uid'));
 			$device = $this->getArgument('device');
 			$survey_manager = new SurveyManager();
+
+			if(!session_id()) {
+				session_start();
+			}
+
+
+			$hex_data = $this->getArgument('h');
+			if($hex_data)
+			    $_SESSION['h'] = $hex_data;
+
 			if($survey_manager->isSurvey($survey_code)){
 			
 				$survey = $survey_manager->getSurvey($survey_code);
@@ -33,9 +43,6 @@ class GetSurvey extends ACall{
 					}
 				}
 				
-				if(!session_id()) {
-					session_start();
-				}
 
 				$_SESSION['survey_code'] = strtolower($survey_code);
 				$_SESSION['start_time'] = time();
@@ -63,7 +70,7 @@ class GetSurvey extends ACall{
 	}
 
 	public function listArguments(){
-		return array('survey','device');
+		return array('survey','device', 'h');
 	}
 }
 WebCallFactory::registryCall('getsurvey','GetSurvey');
@@ -78,7 +85,16 @@ class StartSurvey extends ACall{
 			
 			$survey_manager = new SurveyManager();
 			$device = $this->getArgument('device');
-			
+
+			$hex_data = $this->getArgument('h');
+
+			if(!session_id()) {
+				session_start();
+			}
+
+			if($hex_data)
+			    $_SESSION['h'] = $hex_data;
+
 			if($survey_manager->isSurvey($survey_code)){
 				$survey = $survey_manager->getSurvey($survey_code);
 				if($survey->isDisabled()){
@@ -89,9 +105,6 @@ class StartSurvey extends ACall{
 						$survey_tpl = new Template('survey_not_found.php');
 						return new Answer('ok',$survey_tpl->process(array()),'html');
 					}
-				}
-				if(!session_id()) {
-					session_start();
 				}
 				$_SESSION['survey_code'] = strtolower($survey_code);
 				$_SESSION['start_time'] = time();
@@ -121,7 +134,7 @@ class StartSurvey extends ACall{
 	}
 
 	public function listArguments(){
-		return array('survey','device','uid');
+		return array('survey','device','uid','h');
 	}
 }
 WebCallFactory::registryCall('startsurvey','StartSurvey');
@@ -133,11 +146,18 @@ class WidgetSurvey extends ACall{
 			$survey_code = strtoupper($this->getArgument('survey'));
 			$survey_manager = new SurveyManager();
 			
+			if(!session_id()) {
+				session_start();
+			}
+
+
+			$hex_data = $this->getArgument('h');
+			if($hex_data)
+			    $_SESSION['h'] = $hex_data;
+
 			if($survey_manager->isSurvey($survey_code,true)){
 				$survey = $survey_manager->getSurvey($survey_code);
-				if(!session_id()) {
-					session_start();
-				}
+
 				$_SESSION['survey_code'] = strtolower($survey_code);
 				$_SESSION['start_time'] = time();
 				
@@ -156,7 +176,7 @@ class WidgetSurvey extends ACall{
 	}
 
 	public function listArguments(){
-		return array('survey','device');
+		return array('survey','device', 'h');
 	}
 }
 WebCallFactory::registryCall('widgetsurvey','WidgetSurvey');
@@ -202,6 +222,8 @@ class SaveSurveyResult extends ACall{
 			$survey_code =& $_SESSION['survey_code'];
 			$start_time =& $_SESSION['start_time'];
 			$result_id =& $_SESSION['result_id'];
+
+			$hex_data =& $_SESSION['h'];
 			
 			if( ! $survey_code) return new Answer('error','Survey code not defined','json');
 			
@@ -224,6 +246,18 @@ class SaveSurveyResult extends ACall{
 			
 			$_SESSION['result_id'] = $sr_obj->getId();
 			
+
+			if ( $hex_data && is_numeric('0x' . $hex_data)) {
+				$decode_str = pack("H*" , $hex_data);
+				$parse_arr = array();
+				parse_str($decode_str,$parse_arr);
+
+				if (is_array($parse_arr) && count($parse_arr) ) {
+				    $data_ext = new SurveyUserDataExt($sr_obj->getId());
+				    $data_ext->setValues($parse_arr);
+				    $data_ext->save();
+				}
+			}
 			return new Answer('ok','save','json');
 		}catch(Exception $e){
 			return new Answer('error',$e->getMessage(),'json');

@@ -807,4 +807,49 @@ class DemoResult{
 	}
 }
 
+class SurveyUserDataExtManager{
+}
+
+class SurveyUserDataExt{
+	protected $id;
+	protected $survey_result_id;
+	protected $values;
+	
+	function __construct($survey_result_id) {
+		$this->survey_result_id = $survey_result_id;
+	}
+
+	public function getId(){
+		return $this->id;
+	}
+
+	public function setValues($values) {
+		if ( ! is_array($values)) {
+			throw new SurveyException("Values have to be array");
+		}
+		$this->values = $values;
+	}
+
+	public function save(){
+		if (!$this->survey_result_id) {
+			throw new SurveyException("Unkonw survey result id ");
+		}
+		$db = new DB();
+/*
+		$sql = "DELETE FROM survey_user_data_ext WHERE survey_result_id = '" . mysql_real_escape_string($this->survey_result_id) . "'";
+		
+		$db->runQuery($sql,false);
+*/
+		foreach ($this->values as $key => $val) {
+		    $sql = "INSERT INTO survey_user_data_ext SET survey_result_id = '" . mysql_real_escape_string($this->survey_result_id) . 
+				"', name = '" . mysql_real_escape_string($key) . "', val = '" . mysql_real_escape_string($val) . "'";
+		    $db->runQuery($sql,false);
+		}
+	}
+
+
+
+}
+
+
 ?>
